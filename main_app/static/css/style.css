@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  max-width: 800px;
+  margin: auto;
+}
+.btn {
+  float: right;
+}
+nav {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+#navImg {
+  width: 40%;
+  height: auto;
+}
+li {
+  display: inline;
+}
+.linkEl {
+  background-color: #f5cb13;
+}
+.container {
+  margin-bottom: 30px;
+  min-height: 100%;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f5cb13;
+  color: black;
+  text-align: center;
+}
