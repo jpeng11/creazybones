@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crazy Bones</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="btn"><button>Login</button> <button>Sign up</button></div>
+
+      <nav>
+        <div>
+          <ul>
+            <li>
+              <img
+                src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fen%2Fa%2Faa%2FGogo%2527s_Crazy_Bones_logo_%25282%2529.png"
+                alt=""
+                srcset=""
+                id="navImg"
+              />
+            </li>
+          </ul>
+          <ul class="linkEl">
+            <li><a href="#">Home</a></li>
+            |
+            <li><a href="#">Trade</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main class="container">
+      {% block content %} {% endblock %}
+    </main>
+    <footer>
+      <div>
+        All Rights Reserved, &copy; 2019
+        <a href="https://github.com/jpeng11/crazybones">Crazy Bones</a> &nbsp;
+      </div>
+    </footer>
+  </body>
+</html>
