@@ -9,8 +9,7 @@ class Crazybone(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cb = models.ManyToManyField(Crazybone, on_delete=models.CASCADE)
-    friends = models.ManyToManyField(User, on_delete=models.CASCADE)
+    cb = models.ManyToManyField(Crazybone)
 
 class Comment(models.Model):
     text = models.TextField(max_length=300)
@@ -26,9 +25,9 @@ class TradeRequest(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
 
-# class FriendList(models.Model):
-#     user = models.OneToOneField(Profile, on_delete=models.CASCADE)
-#     myId = models.ForeignKey(Profile, on_delete=models.CASCADE)
+class FriendList(models.Model):
+    user = models.ForeignKey(Profile, related_name='a', on_delete=models.CASCADE)
+    myId = models.ForeignKey(Profile, related_name='b', on_delete=models.CASCADE)
 
 
 
