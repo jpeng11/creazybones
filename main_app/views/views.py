@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .seed import crazybones
+# from .seed import crazybones
 
 # Create your views here.
 
