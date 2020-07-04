@@ -1,3 +1,9 @@
+html {
+  font-family: "Times New Roman";
+  background: #bde9fd
+    url("https://vignette.wikia.nocookie.net/crazybonespedia/images/5/50/Wiki-background/revision/latest?cb=20191012085222")
+    top left repeat;
+}
 body {
   display: flex;
   min-height: 100vh;
@@ -14,27 +20,55 @@ nav {
   position: relative;
   text-align: center;
   width: 100%;
+  background-color: #dd360a;
+  opacity: 0.94;
 }
 #navImg {
   width: 40%;
   height: auto;
 }
-li {
+.baseLi {
   display: inline;
-}
-.linkEl {
-  background-color: #f5cb13;
+  font-size: 20px;
 }
 .container {
   margin-bottom: 30px;
   min-height: 100%;
+  background-color: #e7f4d2;
+  opacity: 0.94;
 }
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f5cb13;
   color: black;
   text-align: center;
+  background-color: #e7f4d2;
+  opacity: 0.94;
+}
+
+/* Home.html Style */
+#aboutImg {
+  width: 200px;
+  float: left;
+  margin-right: 15px;
+}
+#feedImg {
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+td {
+  width: 800px;
+}
+.feedList {
+  display: table;
+  margin: 0 auto;
+}
+#homeTable {
+  border-style: outset;
+}
+#homeTd {
+  border-style: ridge;
 }
