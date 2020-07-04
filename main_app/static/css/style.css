@@ -1,3 +1,6 @@
+html {
+  font-family: "Times New Roman";
+}
 body {
   display: flex;
   min-height: 100vh;
@@ -19,22 +22,44 @@ nav {
   width: 40%;
   height: auto;
 }
-li {
+.baseLi {
   display: inline;
-}
-.linkEl {
-  background-color: #f5cb13;
+  font-size: 20px;
 }
 .container {
   margin-bottom: 30px;
   min-height: 100%;
 }
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f5cb13;
   color: black;
   text-align: center;
+}
+
+/* Home.html Style */
+#aboutImg {
+  width: 200px;
+  float: left;
+  margin-right: 15px;
+}
+#feedImg {
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+td {
+  width: 800px;
+}
+.feedList {
+  display: table;
+  margin: 0 auto;
+}
+#homeTable {
+  border-style: outset;
+}
+#homeTd {
+  border-style: ridge;
 }
