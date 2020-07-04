@@ -72,3 +72,7 @@ def crazybones():
         {'name': 'Miss Froggy', 'img': 'https://vignette.wikia.nocookie.net/crazybonespedia/images/5/51/Oldgogo1zzzz12f23sabad2dfr.png/revision/latest?cb=20141210225713', 'description': 'lorem ispem'},
 
     ]
+
+def users = [
+    {'username': 'Tim', 'password': 'qpwoeiruty1'}
+]
