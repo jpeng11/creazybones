@@ -8,4 +8,5 @@ urlpatterns = [
     path('crazybone/', include('main_app.urls.crazybone')),
     # path('trades/', include('main_app.urls.trades')),
     path('seed/', views.seed, name='seed'),
+    path('friends/', include('main_app.urls.friends')),
 ]
