@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Sign Up</h1>
+<table id="homeTable" style="background-color: orange;">
+  <tbody>
+    <tr>
+      <td id="SignupTD">
+        <h1 style="text-align: center;">
+          <span style="color: red; padding: 20px; text-shadow: 2px 2px yellow;">SIGN</span>
+          <span style="color: yellow; text-shadow: 2px 2px red;">UP</span>
+        </h1>
+        {% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
 
-{% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
+        <form method="post" action="{% url 'signup' %}" style="color: red; font-weight: 600;">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class="btn" value="SIGNUP"
+            style="color: red; background-color: yellow; border-radius: 50%; border-color: tomato;">
+        </form>
 
-<form method="post" action="{% url 'signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" class="btn" value="signup">
-</form>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
 
 {% endblock %}
