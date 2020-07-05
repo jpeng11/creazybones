@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Log In</h1>
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" class="btn" value="login">
-  <input type="hidden" name="next" value="{{ next }}">
-</form>
+<table id="homeTable" style="background-color: orange;">
+  <tbody>
+    <tr>
+      <td id="LoginTD">
+        <h1 style="text-align: center;">
+          <span style="color: yellow; padding: 20px; text-shadow: 2px 2px red;">LOG</span>
+          <span style="color: red; text-shadow: 2px 2px yellow;">IN</span>
+        </h1>
+        <form method="post" action="{% url 'login' %}"
+          style="text-align: center; color: red; font-weight: 600; text-shadow: 1px 1px yellow;">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class="btn" value="LOGIN"
+            style="color: red; background-color: yellow; border-radius: 50%; border-color: tomato;">
+          <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+      </td>
+    </tr>
+  </tbody>
+
+</table>
 {% endblock %}
