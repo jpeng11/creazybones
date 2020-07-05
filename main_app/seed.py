@@ -73,6 +73,11 @@ def crazybones():
 
     ]
 
-def users = [
-    {'username': 'Tim', 'password': 'qpwoeiruty1'}
+def users():
+    return [
+    {'username': 'Tim', 'password': 'qpwoeiruty1'}, # haven't figured out how to add a password yet
+    {'username': 'Adrian', 'password': 'qpwoeiruty1'},
+    {'username': 'Ibrahim', 'password': 'qpwoeiruty1'},
+    {'username': 'Peter', 'password': 'qpwoeiruty1'},
+    {'username': 'Jiecai', 'password': 'qpwoeiruty1'},
 ]
