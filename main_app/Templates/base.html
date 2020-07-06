@@ -21,15 +21,14 @@
     </div> -->
     <nav>
       <ul>
-        <li><a href="{% url 'logout' %}">Log Out</a></li>
+        <li style="display: inline;"><a href="{% url 'logout' %}">Log Out</a></li>
       </ul>
     </nav>
-    <h3> Welcome {{user}} </h3>
     {% else %}
     <nav>
       <ul>
-        <li><a href="{% url 'login' %}">Log In</a></li>
-        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        <li style="display: inline; padding-right: 40px;"><a href="{% url 'login' %}">Log In</a></li>
+        <li style="display: inline; padding-left: 40px;"><a href="{% url 'signup' %}">Sign Up</a></li>
       </ul>
     </nav>
     {% endif %}
@@ -46,13 +45,19 @@
         <ul class="navBtn">
           <li class="baseLi">
             <img src="http://code.divshot.com/geo-bootstrap/img/test/7upspot.gif" alt="" srcset="" /><a
-              href="#">Home</a>
+              href="/">Home</a>
           </li>
           <span>|</span>
           <li class="baseLi">
             <img src="https://www.theworldsworstwebsiteever.com/images/new21.gif" alt="" srcset="" /><a
               href="#">Trade</a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="baseLi">
+            <img src="https://web.archive.org/web/20091020152706/http://hk.geocities.com/ndhufood/images/cute03/01.gif"
+              alt="" srcset="" /><a href="friends/">Friends</a>
+          </li>
+          {% endif %}
         </ul>
         <hr />
       </div>
