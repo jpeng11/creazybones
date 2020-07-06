@@ -58,28 +58,3 @@ footer {
   background-color: #e7f4d2;
   opacity: 0.94;
 }
-
-/* Home.html Style */
-#aboutImg {
-  width: 200px;
-  float: left;
-  margin-right: 15px;
-}
-#feedImg {
-  width: 150px;
-  display: block;
-  margin: 0 auto;
-}
-td {
-  width: 800px;
-}
-.feedList {
-  display: table;
-  margin: 0 auto;
-}
-#homeTable {
-  border-style: outset;
-}
-#homeTd {
-  border-style: ridge;
-}

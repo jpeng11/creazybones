@@ -20,25 +20,32 @@
         <div class="authDiv">
           {% if user.is_authenticated %}
           <ul>
-            <li><a href="{% url 'logout' %}"><button>Log Out</button></a></li>
+            <li>
+              <a href="{% url 'logout' %}"><button>Log Out</button></a>
+            </li>
           </ul>
           <h3>Welcome {{user}}</h3>
           {% else %}
           <ul>
-            <li><a href="{% url 'login' %}"><button>Log In</button></a></li>
-            <li><a href="{% url 'signup' %}"><button>Sign Up</button></a></li>
+            <li>
+              <a href="{% url 'login' %}"><button>Log In</button></a>
+            </li>
+            <li>
+              <a href="{% url 'signup' %}"><button>Sign Up</button></a>
+            </li>
           </ul>
           {% endif %}
         </div>
         <div>
           <ul>
             <li class="baseLi">
-              <img
-                src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524"
-                alt=""
-                srcset=""
-                id="navImg"
-              />
+              <a href="{{% url 'home' %}}">
+                <img
+                  src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524"
+                  alt=""
+                  srcset=""
+                  id="navImg"
+              /></a>
             </li>
           </ul>
           <hr />
