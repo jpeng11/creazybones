@@ -58,3 +58,12 @@ footer {
   background-color: #e7f4d2;
   opacity: 0.94;
 }
+
+/* Table, td style */
+.tb-1 {
+  border-style: outset;
+}
+.td-1 {
+  border-style: ridge;
+  width: 800px;
+}

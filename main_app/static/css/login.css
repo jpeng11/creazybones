@@ -1,16 +1,7 @@
 * {
   color: green;
 }
-td {
-  width: 800px;
-}
 .feedList {
   display: table;
   margin: 0 auto;
-}
-#homeTable {
-  border-style: outset;
-}
-#homeTd {
-  border-style: ridge;
 }
