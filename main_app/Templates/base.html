@@ -2,78 +2,91 @@
 
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crazy Bones</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    {% block style %} {% endblock %}
+  </head>
 
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crazy Bones</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-  {% block style %} {% endblock %}
-</head>
-
-<body>
-  <header>
-    {% if user.is_authenticated %}
-    <!-- <div class="btn">
-      <button>Login</button>
-      <button>Sign up</button>
-    </div> -->
-    <nav>
-      <ul>
-        <li><a href="{% url 'logout' %}">Log Out</a></li>
-      </ul>
-    </nav>
-    <h3> Welcome {{user}} </h3>
-    {% else %}
-    <nav>
-      <ul>
-        <li><a href="{% url 'login' %}">Log In</a></li>
-        <li><a href="{% url 'signup' %}">Sign Up</a></li>
-      </ul>
-    </nav>
-    {% endif %}
-    <nav>
+  <body>
+    <header>
+      <nav>
+        <div class="authDiv">
+          {% if user.is_authenticated %}
+          <ul>
+            <li><a href="{% url 'logout' %}"><button>Log Out</button></a></li>
+          </ul>
+          <h3>Welcome {{user}}</h3>
+          {% else %}
+          <ul>
+            <li><a href="{% url 'login' %}"><button>Log In</button></a></li>
+            <li><a href="{% url 'signup' %}"><button>Sign Up</button></a></li>
+          </ul>
+          {% endif %}
+        </div>
+        <div>
+          <ul>
+            <li class="baseLi">
+              <img
+                src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524"
+                alt=""
+                srcset=""
+                id="navImg"
+              />
+            </li>
+          </ul>
+          <hr />
+          <ul class="navBtn">
+            <li class="baseLi">
+              <img
+                src="http://code.divshot.com/geo-bootstrap/img/test/7upspot.gif"
+                alt=""
+                srcset=""
+              /><a href="#">Home</a>
+            </li>
+            <span>|</span>
+            <li class="baseLi">
+              <img
+                src="https://www.theworldsworstwebsiteever.com/images/new21.gif"
+                alt=""
+                srcset=""
+              /><a href="#">Trade</a>
+            </li>
+          </ul>
+          <hr />
+        </div>
+      </nav>
+    </header>
+    <main class="container">
+      {% block content %} {% endblock %}
+    </main>
+    <footer>
       <div>
-        <ul>
-          <li class="baseLi">
-            <img
-              src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524"
-              alt="" srcset="" id="navImg" />
-          </li>
-        </ul>
-        <hr />
-        <ul class="navBtn">
-          <li class="baseLi">
-            <img src="http://code.divshot.com/geo-bootstrap/img/test/7upspot.gif" alt="" srcset="" /><a
-              href="#">Home</a>
-          </li>
-          <span>|</span>
-          <li class="baseLi">
-            <img src="https://www.theworldsworstwebsiteever.com/images/new21.gif" alt="" srcset="" /><a
-              href="#">Trade</a>
-          </li>
-        </ul>
-        <hr />
+        <small
+          >This sight is best view through Internet Explorer
+          <img
+            src="http://code.divshot.com/geo-bootstrap/img/test/ie_logo.gif"
+            alt=""
+            srcset=""
+          />
+          or Netscape
+          <img
+            src="http://code.divshot.com/geo-bootstrap/img/test/ns_logo.gif"
+            alt=""
+            srcset=""
+          />. 640x360 resolution.
+        </small>
       </div>
-    </nav>
-  </header>
-  <main class="container">
-    {% block content %} {% endblock %}
-  </main>
-  <footer>
-    <div>
-      <small>This sight is best view through Internet Explorer
-        <img src="http://code.divshot.com/geo-bootstrap/img/test/ie_logo.gif" alt="" srcset="" />
-        or Netscape
-        <img src="http://code.divshot.com/geo-bootstrap/img/test/ns_logo.gif" alt="" srcset="" />. 640x360 resolution.
-      </small>
-    </div>
-    <div>
-      All Rights Reserved, &copy; 1990, 2020
-      <a href="https://github.com/jpeng11/crazybones">Github</a>
-    </div>
-  </footer>
-</body>
-
+      <div>
+        All Rights Reserved, &copy; 1990, 2020
+        <a href="https://github.com/jpeng11/crazybones">Github</a>
+      </div>
+    </footer>
+  </body>
 </html>

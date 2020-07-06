@@ -23,6 +23,17 @@ nav {
   background-color: #dd360a;
   opacity: 0.94;
 }
+.authDiv {
+  overflow: auto;
+}
+.authDiv > ul {
+  margin: 0;
+  float: right;
+  list-style-type: none;
+}
+.authDiv > ul > li {
+  display: inline;
+}
 #navImg {
   width: 40%;
   height: auto;
