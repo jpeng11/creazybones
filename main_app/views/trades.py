@@ -39,7 +39,7 @@ def result(req):
             results = None
     elif search_method == 'direct':
         try:
-            user_id = req.GET['search-user-id']
+            user_id = req.GET['user_id']
             print('huh', user_id)
             crazybone = Crazybone.objects.get(id=search_query)
             profile = Profile.objects.get(id=user_id)

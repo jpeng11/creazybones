@@ -26,8 +26,7 @@
   {% for owner in users_with_cb %}
   <li>
     <p>
-      <a
-        href="/trades/result?search-method=direct&search-query={{ cb.id }}&search-user-id={{ owner.id }}"
+      <a href="/trades/result?search_method=direct&search_query={{ cb.id }}&user_id={{ owner.id }}"
         >{{owner.user.username}}</a
       >
     </p>
