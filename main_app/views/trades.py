@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from main_app.models import Crazybone, TradeRequest
 from django.contrib.auth.models import User
@@ -10,10 +10,11 @@ from ..forms import TradeSearchForm
 
 @login_required
 def index(req):
-    return render(req, 'trades/form.html', {'form':TradeSearchForm})
+    return render(req, 'trades/form.html', {'form':TradeSearchForm, 'error':None})
 
 @login_required
 def result(req):
+
     user_crazybones = req.user.profile.cb.all()
     print(user_crazybones)
 
@@ -21,6 +22,16 @@ def result(req):
     search_query = req.GET['search_query'].strip()
 
     radio_selected = False
+    
+    try: 
+        req.GET['error']
+        error = True
+    except:
+        error = None
+
+    if search_query == req.user.username and search_method == "user_name":
+        form = TradeSearchForm(req.GET)
+        return render(req, 'trades/form.html', {'form':form, 'error':"Big Time Error"})
 
     if search_method == "cb_name":
         try:
@@ -40,10 +51,8 @@ def result(req):
     elif search_method == 'direct':
         try:
             user_id = req.GET['user_id']
-            print('huh', user_id)
             crazybone = Crazybone.objects.get(id=search_query)
             profile = Profile.objects.get(id=user_id)
-            print('hello', crazybone, profile)
             results = [{
                 "user": profile.user.username,
                 "cb": crazybone.name
@@ -64,12 +73,15 @@ def result(req):
         except:
             results = None
 
-    return render(req, 'trades/results.html', {'results': results, 'user_crazybones':user_crazybones, 'search_method':search_method, 'radio_selected': radio_selected})
+    return render(req, 'trades/results.html', {'results': results, 'user_crazybones':user_crazybones, 'search_method':search_method, 'radio_selected': radio_selected, 'error':error})
 
 @login_required
 def create(req):
     selected_values = req.POST['selected'].split('-')
-    print(selected_values)
+
+    if req.user.username == selected_values[0]:
+        return redirect(req.META['HTTP_REFERER']+"&error=True")
+
     try:
         new_user_from = req.user.profile
         new_user_to = User.objects.get(username__iexact=selected_values[0]).profile

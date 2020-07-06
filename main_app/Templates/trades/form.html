@@ -14,7 +14,7 @@
     trade!</p>
   <form id="finder" method="get" action="{% url 'trade-result' %}">
     {{form}}
-    <input type="submit" name="submit" value="Submit">
+    <input type="submit" name="submit" value="Submit">{% if error %}<p class="warning">You can't trade with yourself!</p>{% endif %}
   </form>
 </div>
 {% endblock %}

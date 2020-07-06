@@ -4,6 +4,7 @@
 <div id="trade-container">
   <h1>Trade your Crazy Bones</h1>
   {% if results %} {% if results != "No user has that Crazy Bone yet." %}
+  <a href = "{% url 'trade' %}" >Try another Trade Search</a>
   <form id="trader" method="post" action="{% url 'trade-create'%}">
     {% csrf_token %}
     <table>
@@ -21,14 +22,10 @@
             type="radio"
             name="selected"
             value="{{result.user}}-{{result.cb}}"
-            {%
-            if
-            radio_selected
-            %}
+            {% if radio_selected %}
             checked
-            {%
-            endif
-            %}
+            {% endif %}
+            required
           />
         </td>
       </tr>
@@ -45,6 +42,9 @@
       </select>
     </div>
     <input type="submit" value="Submit" />
+    {% if error %}
+    <p class="warning">You can't trade with yourself!</p>
+    {% endif %}
   </form>
   {% else %}
   <p>{{results}} <a href="{% url 'trade' %}">Look for another Crazy Bone.</a></p>
