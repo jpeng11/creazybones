@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<table id="homeTable" style="background-color: orange;">
+  <tbody>
+    <tr>
+      <td id="FriendsListTD">
+        {% for friend in friends%}
+        <p>{{friend.user.user}}</p>
+        {% endfor %}
+      </td>
+    </tr>
+  </tbody>
+
+</table>
+{% endblock %}
