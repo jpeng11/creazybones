@@ -10,9 +10,13 @@
   <tbody>
     <tr>
       <td id="FriendsListTD">
+        {% if friends %}
         {% for friend in friends%}
         <p>{{friend.user.user}}</p>
         {% endfor %}
+        {% else %}
+        <p> No friends just yet :( </p>
+        {% endif %}
       </td>
     </tr>
   </tbody>

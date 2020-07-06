@@ -7,5 +7,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(req):
     # loggedin_user = Profile.objects.get(user = req.user)
-    friends = FriendList.objects.filter(myId = Profile.objects.get(user=req.user))
-    return render(req, 'friends/friends.html', {'friends': friends})
+    try:
+        friends = FriendList.objects.filter(myId = Profile.objects.get(user=req.user))
+        return render(req, 'friends/friends.html', {'friends': friends})
+    except:
+        return render(req, 'friends/friends.html')
