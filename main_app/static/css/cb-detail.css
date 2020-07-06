@@ -1,0 +1,7 @@
+body {
+    text-align: center;
+}
+.comment-div {
+    display: flex;
+    justify-content: center;
+}
