@@ -7,4 +7,6 @@ class CommentForm(forms.ModelForm):
         fields = ['text']
 
 class TradeSearchForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
+    CHOICES = [('cb_name', ' Find out who owns a Crazy Bone'), ('user_name', 'Find out what Crazy Bones a user has')]
+    search_method = forms.ChoiceField(label='Do you want to:', widget=forms.RadioSelect, choices=CHOICES)
+    search_query = forms.CharField(label="Enter Name of User or Crazy Bone", max_length=100)
