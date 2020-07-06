@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div id="trade-container">
+  <h1> Trade your Crazy Bones</h1>
+  {% if results %}
+  {% if results != "No user has that Crazy Bone yet." %}
+  <form id="trader" method="post" action="{% url 'trade-create'%}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Crazy Bone</th>
+        <th>Pick One to Trade For</th>
+      </tr>
+      {% for result in results %}
+      <tr>
+        <td>{{result.user}}</td>
+        <td>{{result.cb}}</td>
+        <td>
+          <input type="radio" name="selected" value="{{result.user}}-{{result.cb}}">
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="form-row">
+      <label for="offered">Select which Crazy Bone you would like to offer</label>
+      <select id="offered" name="offered">
+        {% for crazybone in user_crazybones%}
+        <option value="{{crazybone.name}}">
+          {{crazybone.name}}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+  {% else %}
+  <p>{{results}} <a href="{% url 'trade' %}">Look for another Crazy Bone.</a> </p>
+  {% endif %}
+  {% else %}
+  <p>No results found. Make sure there are no typos in your spelling. <a href="{% url 'trade' %}">Try Again</a></p>
+  {% endif %}
+</div>
+{% endblock %}

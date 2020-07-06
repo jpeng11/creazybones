@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div id="trade-container">
+  <h1> Trade your Crazy Bones</h1>
+  <p> Don't like your Crazy Bones? Trade them away for the one you want!
+    Use the form below to find out who owns the Crazy Bone you want or see what Crazy Bones a user has, then propose a
+    trade!</p>
+  <form id="finder" method="get" action="{% url 'trade-result' %}">
+    <div class="form-row">
+      <p>Do you want to:</p>
+      <input type="radio" id="cb-name" name="search-method" value="cb-name">
+      <label for="cb-name">Find out who owns a Crazy Bone</label>
+      or
+      <input type="radio" id="user" name="search-method" value="user">
+      <label for="user">Find out what Crazy Bones a user has</label>
+    </div>
+    <div class="form-row">
+      <label for="user">Enter Name of User or Crazy Bone</label>
+      <input type="text" id="seach-query" name="search-query">
+    </div>
+    <div class="form-row">
+      <input type="submit" name="submit" value="Submit">
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+#trade-container{
+  padding: 10px 10px;
+}
+
+/* Finder Form */
+#finder .form-row{
+  padding: 8px;
+}
+
+#finder .form-row p{
+  padding:0px;
+  margin:0;
+}
+
+#finder .form-row input[type="radio"]{
+  margin:0 5px;
+}
+
+#finder .form-row input[type="submit"]{
+  display:block;
+  margin:0 auto;
+}
+
+/* Form */
+#trader table{
+  width:100%;
+  margin:10px 0;
+}
+
+#trader table, th, td{
+  border: 1px solid black;
+}
+
+#trader table td{
+  text-align:center;
+}
+
+#trader input[type="submit"]{
+  display:block;
+  margin:0 auto;
+}
+
+#trader .form-row{
+  display:block;
+  margin:8px auto;
+  text-align:center;
+}
