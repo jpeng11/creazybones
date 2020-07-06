@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import UpdateView, DeleteView
 from ..models import Crazybone, Comment, Profile
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -8,7 +10,9 @@ from django.contrib.auth.models import User
 def detail(req, cb_id):
     cb = Crazybone.objects.get(id=cb_id)
     comments = Comment.objects.filter(cb=cb_id)
-    return render(req, 'crazybone/detail.html', {'cb': cb, 'comments': comments})
+    users_with_cb = Profile.objects.filter(cb=cb)
+    print(users_with_cb)
+    return render(req, 'crazybone/detail.html', {'cb': cb, 'comments': comments,'users_with_cb': users_with_cb})
 
 @login_required
 def add_comment(req, cb_id):
@@ -22,10 +26,12 @@ def add_comment(req, cb_id):
         print('no user found')
     return redirect('cb_detail', cb_id)
 
-@login_required
-def remove_comment(req, cb_id, comment_id):
-    pass
+class CommentUpdate(UpdateView):
+    model = Comment
+    fields = ['text']
 
 @login_required
-def update_comment(req, cb_id, comment_id):
-    pass
+def remove_comment(req, cb_id, pk):
+    Comment.objects.get(id=pk).delete()
+    print('hello')
+    return redirect(f'/crazybone/{cb_id}')
