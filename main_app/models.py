@@ -18,10 +18,10 @@ class Comment(models.Model):
 
 
 class TradeRequest(models.Model):
-    user_from: models.ForeignKey(Profile, on_delete=models.CASCADE)
-    user_to: models.ForeignKey(Profile, on_delete=models.CASCADE)
-    cb_wanted: models.ForeignKey(Crazybone, on_delete=models.CASCADE)
-    cb_offered: models.ForeignKey(Crazybone, on_delete=models.CASCADE)
+    user_from = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user_to = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    cb_wanted = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
+    cb_offered = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
 
@@ -29,6 +29,8 @@ class FriendList(models.Model):
     user = models.ForeignKey(Profile, related_name='a', on_delete=models.CASCADE)
     myId = models.ForeignKey(Profile, related_name='b', on_delete=models.CASCADE)
 
+    # def __str__(self):
+    #     return f"{self.user.user} is friends with you ({self.myId.user})"
 
 
 
