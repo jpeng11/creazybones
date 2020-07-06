@@ -1,5 +1,22 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cb-detail.css' %}" />
+{% endblock %} {% block content %}
 <h1>{{ cb.name }}</h1>
 <img src="{{ cb.img }}" alt="" />
 <p>{{ cb.description }}</p>
+<br />
+<h3>Comments</h3>
+<ul>
+  {% for comment in comments %}
+  <div class="comment-div">
+    <p>{{ comment.text }}</p>
+    <p>&nbsp;- {{ comment.user.user.username }}</p>
+  </div>
+  {% empty %} {% endfor %}
+</ul>
+<form action="{% url 'add_comment' cb.id %}" method="POST">
+  {% csrf_token %}
+  <input type="text" name="text" placeholder=".." />
+  <button type="submit">Comment</button>
+</form>
 {% endblock %}
