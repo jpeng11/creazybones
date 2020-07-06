@@ -22,3 +22,10 @@ td {
 #homeTd {
   border-style: ridge;
 }
+#cbImg {
+  display: block;
+  margin: 0 auto;
+}
+.td-1 {
+  text-align: center;
+}
