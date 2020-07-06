@@ -29,8 +29,9 @@ sccwer
 
 ## Development Documentation
 
-- [Trello board]()
-- [ERD Diagram]()
+- [Trello board](https://trello.com/b/UHIbge4o/crazbone-trader)
+- ![ERD image](/main_app/static/img/ERD.png)
+- ![Wirefram image](/main_app/static/img/wireframe.png)
 
 ## Core Team
 
