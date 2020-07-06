@@ -10,7 +10,7 @@
 <div id="trade-container">
   <h1> Trade your Crazy Bones</h1>
   {% if results %}
-  {% if results != "No user has that Crazy Bone Yet" %}
+  {% if results != "No user has that Crazy Bone yet." %}
   <form id="trader" method="post" action="{% url 'trade-create'%}">
     {% csrf_token %}
     <table>
@@ -42,10 +42,10 @@
     <input type="submit" value="Submit">
   </form>
   {% else %}
-  <p>{{results}}</p>
+  <p>{{results}} <a href="{% url 'trade' %}">Look for another Crazy Bone.</a> </p>
   {% endif %}
   {% else %}
-  <p>No results found. Make sure there are no typos in your spelling.</p>
+  <p>No results found. Make sure there are no typos in your spelling. <a href="{% url 'trade' %}">Try Again</a></p>
   {% endif %}
 </div>
 {% endblock %}
