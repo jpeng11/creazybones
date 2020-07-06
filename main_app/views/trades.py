@@ -4,6 +4,7 @@ from main_app.models import Crazybone, TradeRequest
 from django.contrib.auth.models import User
 from ..models import Profile
 from django.contrib.auth.decorators import login_required
+from main_app.forms import TradeSearchForm
 
 from ..forms import TradeSearchForm
 
@@ -13,23 +14,24 @@ def index(req):
 
 @login_required
 def result(req):
-    user_crazybones = User.objects.get(username=req.user).profile.cb.all()
+    user_crazybones = req.user.profile.cb.all()
     print(user_crazybones)
 
-    search_method = req.GET['search-method']
-    search_query = req.GET['search-query']
+    search_method = req.GET['search_method']
+    search_query = req.GET['search_query'].strip()
 
     radio_selected = False
 
-    if search_method == "cb-name":
+    if search_method == "cb_name":
         try:
-            profiles = Crazybone.objects.get(name=search_query).profile_set.all()
+            crazybone = Crazybone.objects.get(name__iexact=search_query)
+            profiles = crazybone.profile_set.all()
             if(len(profiles) != 0):
                 results = []
                 for profile in profiles:
                     results.append({
                         "user": profile.user.username,
-                        "cb": search_query
+                        "cb": crazybone.name
                     })
             else:
                 results = "No user has that Crazy Bone yet."
@@ -51,7 +53,8 @@ def result(req):
             results = None
     else:
         try:
-            crazybones = User.objects.get(username=search_query).profile.cb.all()
+            user = User.objects.get(username__iexact=search_query)
+            crazybones = User.objects.get(username__iexact=search_query).profile.cb.all()
             results = []
             for crazybone in crazybones:
                 results.append({
@@ -69,9 +72,9 @@ def create(req):
     print(selected_values)
     try:
         new_user_from = req.user.profile
-        new_user_to = User.objects.get(username=selected_values[0]).profile
-        new_cb_offered = new_user_from.cb.get(name=req.POST['offered'])
-        new_cb_wanted = new_user_to.cb.get(name=selected_values[1])
+        new_user_to = User.objects.get(username__iexact=selected_values[0]).profile
+        new_cb_offered = new_user_from.cb.get(name__iexact=req.POST['offered'])
+        new_cb_wanted = new_user_to.cb.get(name__iexact=selected_values[1])
         new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered)
         return HttpResponse("<h1> Trade Created - See Admin Page for Now </h1>")
     except Exception as err:
