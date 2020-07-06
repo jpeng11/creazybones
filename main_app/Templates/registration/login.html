@@ -1,30 +1,47 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block style %}
+{% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 
 <table class="tb-1" style="background-color: orange;">
   <tbody>
     <tr>
-      <td id="LoginTD" class="td-1">
+      <th class="td-1">
         <h1 style="text-align: center;">
-          <span style="color: yellow; padding: 20px; text-shadow: 2px 2px red;">LOG</span>
+          <span style="color: yellow; padding: 20px; text-shadow: 2px 2px red;"
+            >LOG</span
+          >
           <span style="color: red; text-shadow: 2px 2px yellow;">IN</span>
         </h1>
-        <form method="post" action="{% url 'login' %}"
-          style="text-align: center; color: red; font-weight: 600; text-shadow: 1px 1px yellow;">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" class="btn" value="LOGIN"
-            style="color: red; background-color: yellow; border-radius: 50%; border-color: tomato;">
-          <input type="hidden" name="next" value="{{ next }}">
+      </th>
+    </tr>
+    <tr>
+      <td id="LoginTD" class="td-1">
+        <form
+          method="post"
+          action="{% url 'login' %}"
+          style="
+            text-align: center;
+            color: red;
+            font-weight: 600;
+            text-shadow: 1px 1px yellow;
+          "
+        >
+          {% csrf_token %} {{ form.as_p }}
+          <input
+            type="submit"
+            class="btn"
+            value="LOGIN"
+            style="
+              color: red;
+              background-color: yellow;
+              border-radius: 50%;
+              border-color: tomato;
+            "
+          />
+          <input type="hidden" name="next" value="{{ next }}" />
         </form>
-
       </td>
     </tr>
   </tbody>
-
 </table>
 {% endblock %}

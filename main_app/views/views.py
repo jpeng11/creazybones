@@ -8,7 +8,8 @@ import random
 
 
 def home(request):
-    return render(request, 'home.html')
+    crazybones = Crazybone.objects.all()
+    return render(request, 'home.html', {'cbs': crazybones})
 
 
 def seed(req):
@@ -20,8 +21,9 @@ def seed(req):
     # add all the crazybones to the database
     cbs = crazybones()
     for ind, cb in enumerate(cbs):
-        c = Crazybone.objects.create(name=cb['name'],img=cb['img'], description=cb['description'])     
-    
+        c = Crazybone.objects.create(
+            name=cb['name'], img=cb['img'], description=cb['description'])
+
     # adds the users, creates a profile attached to it, then adds 10 random crazybones
     seed_users = users()
     for user in seed_users:
@@ -31,4 +33,3 @@ def seed(req):
             rand_cb = Crazybone.objects.order_by('?')[0]
             new_profile.cb.add(rand_cb)
     return redirect('/')
-    
