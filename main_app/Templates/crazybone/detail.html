@@ -24,7 +24,14 @@
 <h4>Who has this Crazybone??</h4>
 <ul>
   {% for owner in users_with_cb %}
-  <li><p>{{owner.user.username}}</p></li>
+  <li>
+    <p>
+      <a
+        href="/trades/result?search-method=direct&search-query={{ cb.id }}&search-user-id={{ owner.id }}"
+        >{{owner.user.username}}</a
+      >
+    </p>
+  </li>
   {% empty %}
   <li><p>No one owns this Crazybone.. yet</p></li>
   {% endfor %}
