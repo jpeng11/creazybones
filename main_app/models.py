@@ -28,7 +28,3 @@ class TradeRequest(models.Model):
 class FriendList(models.Model):
     user = models.ForeignKey(Profile, related_name='a', on_delete=models.CASCADE)
     myId = models.ForeignKey(Profile, related_name='b', on_delete=models.CASCADE)
-
-
-
-

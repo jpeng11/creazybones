@@ -2,4 +2,10 @@
 <h1>{{ cb.name }}</h1>
 <img src="{{ cb.img }}" alt="" />
 <p>{{ cb.description }}</p>
+<br />
+<form action="{% url 'home' %}">
+  {% csrf_token %}
+  <input type="text" name="text" placeholder=".." />
+  <button type="submit" class="btn">Comment</button>
+</form>
 {% endblock %}

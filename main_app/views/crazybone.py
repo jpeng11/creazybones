@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from ..models import Crazybone
+from ..forms import CommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @login_required
 def detail(req, cb_id):
+    comment_form = CommentForm()
     cb = Crazybone.objects.get(id=cb_id)
-    return render(req, 'crazybone/detail.html', {'cb': cb})
+    return render(req, 'crazybone/detail.html', {'cb': cb, 'comment_form': comment_form})
 
 # def other(req, user_id):
