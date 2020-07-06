@@ -15,13 +15,14 @@ class Comment(models.Model):
     text = models.TextField(max_length=300)
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    cb = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
 
 
 class TradeRequest(models.Model):
-    user_from = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    user_to = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    cb_wanted = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
-    cb_offered = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
+    user_from = models.ForeignKey(Profile, related_name='user_from', on_delete=models.CASCADE)
+    user_to = models.ForeignKey(Profile, related_name='user_to', on_delete=models.CASCADE)
+    cb_wanted = models.ForeignKey(Crazybone, related_name='cb_wanted', on_delete=models.CASCADE)
+    cb_offered = models.ForeignKey(Crazybone, related_name='cb_offered', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
 
