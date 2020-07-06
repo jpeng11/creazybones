@@ -2,7 +2,7 @@
   <br>
   <img alt="Crazy Bones" src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524" width="500px">
   <h1>XXXXX</h1>
-  <strong>Crazy Bones</strong>
+  <strong><a href="https://crazybone.herokuapp.com/">Crazy Bones</a></strong>
 </div>
 
 ## What is Crazy Bones
@@ -30,8 +30,8 @@ sccwer
 ## Development Documentation
 
 - [Trello board](https://trello.com/b/UHIbge4o/crazbone-trader)
-- ![ERD image](/main_app/static/img/ERD.png)
-- ![Wirefram image](/main_app/static/img/wireframe.png)
+- ERD![ERD image](/main_app/static/img/ERD.png)
+- Wireframe![Wirefram image](/main_app/static/img/wireframe.png)
 
 ## Core Team
 
