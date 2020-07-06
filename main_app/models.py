@@ -18,10 +18,10 @@ class Comment(models.Model):
 
 
 class TradeRequest(models.Model):
-    user_from: models.ForeignKey(Profile, on_delete=models.CASCADE)
-    user_to: models.ForeignKey(Profile, on_delete=models.CASCADE)
-    cb_wanted: models.ForeignKey(Crazybone, on_delete=models.CASCADE)
-    cb_offered: models.ForeignKey(Crazybone, on_delete=models.CASCADE)
+    user_from = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user_to = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    cb_wanted = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
+    cb_offered = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
 
