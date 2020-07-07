@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 
 class Crazybone(models.Model):
@@ -24,6 +25,10 @@ class Comment(models.Model):
     cb = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.text}"
+
+    def get_absolute_url(self):
+        cb = Crazybone.objects.get(comment=self)
+        return reverse('cb_detail', kwargs={'cb_id': cb.id})
 
 TRADE_STATUS = (
     ('A', 'Accepted'),

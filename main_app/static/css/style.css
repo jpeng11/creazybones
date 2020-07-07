@@ -23,6 +23,17 @@ nav {
   background-color: #dd360a;
   opacity: 0.94;
 }
+.authDiv {
+  overflow: auto;
+}
+.authDiv > ul {
+  margin: 0;
+  float: right;
+  list-style-type: none;
+}
+.authDiv > ul > li {
+  display: inline;
+}
 #navImg {
   width: 40%;
   height: auto;
@@ -48,27 +59,11 @@ footer {
   opacity: 0.94;
 }
 
-/* Home.html Style */
-#aboutImg {
-  width: 200px;
-  float: left;
-  margin-right: 15px;
-}
-#feedImg {
-  width: 150px;
-  display: block;
-  margin: 0 auto;
-}
-td {
-  width: 800px;
-}
-.feedList {
-  display: table;
-  margin: 0 auto;
-}
-#homeTable {
+/* Table, td style */
+.tb-1 {
   border-style: outset;
 }
-#homeTd {
+.td-1 {
   border-style: ridge;
+  width: 800px;
 }

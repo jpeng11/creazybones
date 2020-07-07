@@ -1,5 +1,38 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cb-detail.css' %}" />
+{% endblock %} {% block content %}
 <h1>{{ cb.name }}</h1>
 <img src="{{ cb.img }}" alt="" />
 <p>{{ cb.description }}</p>
+<br />
+<h3>Comments</h3>
+{% for comment in comments %}
+<div class="comment-div">
+  <p>{{ comment.text }}</p>
+  <p>&nbsp;- {{ comment.user.user.username }}</p>
+  {% if comment.user.user.username == user.username %}
+  <p><a href="{% url 'update_comment' comment.id %}">Edit</a></p>
+  <p><a href="{% url 'delete_comment' cb.id comment.id %}">Delete</a></p>
+  {% endif %}
+</div>
+{% empty %} {% endfor %}
+<form action="{% url 'add_comment' cb.id %}" method="POST">
+  {% csrf_token %}
+  <input type="text" name="text" placeholder=".." />
+  <button type="submit">Comment</button>
+</form>
+<h4>Who has this Crazybone??</h4>
+<ul>
+  {% for owner in users_with_cb %}
+  <li>
+    <p>
+      <a href="/trades/result?search_method=direct&search_query={{ cb.id }}&user_id={{ owner.id }}"
+        >{{owner.user.username}}</a
+      >
+    </p>
+  </li>
+  {% empty %}
+  <li><p>No one owns this Crazybone.. yet</p></li>
+  {% endfor %}
+</ul>
 {% endblock %}

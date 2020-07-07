@@ -13,12 +13,13 @@ def index(req):
         friends_myId = FriendList.objects.filter(myId = req.user.profile)
         friends_user = FriendList.objects.filter(user = req.user.profile)
         friends = friends_myId.union(friends_user)
+        print("hello" + friends)
         searched_users = Profile.objects.filter(user__username__icontains = search_value)
         searched_users = searched_users.exclude(user__username = req.user.username)
         for friend in friends:
             searched_users = searched_users.exclude(user__username = friend.user.user.username)
             searched_users = searched_users.exclude(user__username = friend.myId.user.username)
-        return render(req, 'friends/friends.html', {'friends': friends, 'searched_users': searched_users, 'alreadyRequested': alreadyRequestedFlag})
+        return render(req, 'friends/friends.html', {'friends': friends, 'searched_users': searched_users})
     except:
         return render(req, 'friends/friends.html')
 
