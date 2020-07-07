@@ -1,12 +1,49 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'css/cb-detail.css' %}"
-/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/cb-detail.css' %}" />
 {% endblock %} {% block content %}
 <h1>{{ user.username }}</h1>
 
+<table class="tb-1">
+  <tbody>
+    <tr>
+      <td class="td-1">First Name:</td>
+      {% if user.fist_name %}
+      <td class="td-1">{{user.first_name}}</td>
+      {% else %}
+      <td class="td-1">null</td>
+      {%endif%}
+    </tr>
+    <tr>
+      <td class="td-1">Last Name:</td>
+      {% if user.last_name %}
+      <td class="td-1">{{user.last_name}}</td>
+      {% else %}
+      <td class="td-1">null</td>
+      {%endif%}
+    </tr>
+    <tr>
+      <td class="td-1">Email:</td>
+      {% if user.email %}
+      <td class="td-1">{{user.email}}</td>
+      {% else %}
+      <td class="td-1">null</td>
+      {%endif%}
+    </tr>
+    <tr>
+      <td class="td-1">Number of Crazybone You Own</td>
+      <td class="td-1">{{user_cb.count}}</td>
+    </tr>
+    <tr>
+      <td class="td-1"></td>
+      <td class="td-1">
+        <button><a href="{% url 'user_update' user.id %}">EDIT</a></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h1>Crazybones</h1>
 <table class="tb-1">
   <tbody>
     <tr>
@@ -14,28 +51,45 @@
       <th class="td-1">Image</th>
       <th class="td-1">Description</th>
     </tr>
-    {% for cb in user_cb %}
+    {% for cb in all_cb %}
     <tr>
-      <td class="td-1">{{cb.id}}</td>
-      <td class="td-1"><img src="{{cb.img}}" /></td>
+      <td class="td-1">{{cb.name}}{{cb.id}}</td>
+      <td class="td-1">
+        {% if cb in user_cb %}
+        <img src="{{cb.img}}" />
+        {% else %}
+        <img src="{{cb.img}}" style="filter: grayscale(100%);" />
+        {% endif %}
+      </td>
       <td class="td-1">{{cb.description}}</td>
     </tr>
-    {% endfor %} {% for cb in user_cb %}{% for cbs in crazybones %}
+
+    {% endfor %}
+  </tbody>
+</table>
+{% for cb in user_cb %}
+<p>{{cb.id}}</p>
+{% endfor %}
+
+<!-- <hr />
+<h1>Crazybone You Don't have</h1>
+<table class="tb-1">
+  <tbody>
+    <tr>
+      <th class="td-1">Crazy Bone</th>
+      <th class="td-1">Image</th>
+      <th class="td-1">Description</th>
+    </tr>
+    {% for cbs in cb_user_doesnot_own %}
     <tr>
       <td class="td-1">{{cbs.name}}</td>
-      {% if cbs.id == user_cb %}
       <td class="td-1">
         <img src="{{cbs.img}}" style="filter: grayscale(100%);" />
       </td>
-      {%else%}
-      <td class="td-1">
-        <img src="{{cbs.img}}" />
-      </td>
-      {%endif%}
       <td class="td-1">{{cbs.description}}</td>
     </tr>
 
-    {% endfor %}{% endfor %}
-  </tbody>
-</table>
+    {% endfor %} -->
+<!-- </tbody>
+</table> -->
 {% endblock %}

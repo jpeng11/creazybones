@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="" />
+{% endblock %}
+
+{% block content %}
+<div>
+  <h1>Edit <span>{{user.username}}</span></h1>
+
+  <form method="POST" action="">
+  {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+{% endblock %}
