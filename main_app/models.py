@@ -59,7 +59,7 @@ class TradeRequest(models.Model):
     status = models.CharField(
         max_length=1,
         choices=TRADE_STATUS,
-        default=[2][0]
+        default='P'
     )
 
     def __str__(self):
