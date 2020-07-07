@@ -14,13 +14,15 @@
           <span style="color: purple; padding: 20px; text-shadow: 2px 2px cornflowerblue;">FRIENDS</span>
           <span style="color: royalblue; text-shadow: 2px 2px white;">LIST</span>
         </h1>
+
         {% if friends %}
         {% for friend in friends%}
         <p>{{friend.user.user}}</p>
         {% endfor %}
         {% else %}
-        <p> No friends just yet :( </p>
+        <p> No friends yet :( </p>
         {% endif %}
+
       </td>
     </tr>
   </tbody>
@@ -34,7 +36,7 @@
           <span style="color: white; padding: 20px; text-shadow: 2px 2px black;">SEARCH</span>
           <span style="color: white; text-shadow: 2px 2px black;">USERS</span>
         </h1>
-        {% if searched_users != 0 %}
+        {% if searched_users != 'admin' %}
         {% for match in searched_users %}
         <div id="searchDiv">
           <p style="display: inline;">{{match}}</p>
