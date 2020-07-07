@@ -18,7 +18,7 @@ class Profile(models.Model):
     cb = models.ManyToManyField(Crazybone)
 
     def __str__(self):
-        return f"{self.user} has {self.cb}"
+        return f"{self.user}"
 
     def get_absolute_url(self):
         return reverse("profile", kwargs={"user_id": self.id, 'pk': self.id})
@@ -94,4 +94,12 @@ class Notification(models.Model):
         Profile, related_name='noti_to', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.noti_from} -> {self.noti_to} ; {self.notification_type}"
+        return f"{self.noti_from} sent you a  {self.get_notification_type_display()}"
+
+
+class Clan(models.Model):
+    name = models.CharField(max_length=100)
+    members = models.ManyToManyField(Profile)
+
+    def __str__(self):
+        return f"{self.name} - {self.members}"
