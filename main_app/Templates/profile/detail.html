@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/cb-detail.css' %}"
+/>
+{% endblock %} {% block content %}
+<h1>{{ user.username }}</h1>
+
+<table class="tb-1">
+  <tbody>
+    <tr>
+      <th class="td-1">Crazy Bone</th>
+      <th class="td-1">Image</th>
+      <th class="td-1">Description</th>
+    </tr>
+    {% for cb in user_cb %}
+    <tr>
+      <td class="td-1">{{cb.id}}</td>
+      <td class="td-1"><img src="{{cb.img}}" /></td>
+      <td class="td-1">{{cb.description}}</td>
+    </tr>
+    {% endfor %} {% for cb in user_cb %}{% for cbs in crazybones %}
+    <tr>
+      <td class="td-1">{{cbs.name}}</td>
+      {% if cbs.id == user_cb %}
+      <td class="td-1">
+        <img src="{{cbs.img}}" style="filter: grayscale(100%);" />
+      </td>
+      {%else%}
+      <td class="td-1">
+        <img src="{{cbs.img}}" />
+      </td>
+      {%endif%}
+      <td class="td-1">{{cbs.description}}</td>
+    </tr>
+
+    {% endfor %}{% endfor %}
+  </tbody>
+</table>
+{% endblock %}
