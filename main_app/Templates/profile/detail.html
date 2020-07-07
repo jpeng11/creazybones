@@ -7,12 +7,11 @@
   <tbody>
     <tr>
       <td class="td-1">First Name:</td>
-      <!-- {% if user.fist_name is True%}
+      {% if user.first_name %}
       <td class="td-1">{{user.first_name}}</td>
       {% else %}
       <td class="td-1">null</td>
-      {%endif%} -->
-      <td class="td-1">{{user.first_name}}</td>
+      {%endif%}
     </tr>
     <tr>
       <td class="td-1">Last Name:</td>
@@ -33,6 +32,10 @@
     <tr>
       <td class="td-1">Number of Crazybone You Own</td>
       <td class="td-1">{{user_cb.count}}</td>
+    </tr>
+    <tr>
+      <td class="td-1">Join Date</td>
+      <td class="td-1">{{user.date_joined}}</td>
     </tr>
     <tr>
       <td class="td-1"></td>
