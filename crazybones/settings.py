@@ -73,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'crazybones.wsgi.application'
 
-
+ABSOLUTE_URL_OVERRIDES = {'auth.user': lambda u: f"/profile/{u.id}"}
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

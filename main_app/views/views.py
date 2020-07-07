@@ -1,14 +1,39 @@
 from django.shortcuts import render, redirect
 from ..seed import crazybones, users
-from ..models import Crazybone, Profile
+from ..models import Crazybone, Profile, FriendList, Comment, TradeRequest
 from django.contrib.auth.models import User
+from operator import attrgetter
+from itertools import chain
 import random
+
 
 # Create your views here.
 
 
 def home(request):
+    user = request.user
     crazybones = Crazybone.objects.all()
+    feed = None
+    if user.username != '':
+        friends = []
+        friends1 = FriendList.objects.filter(user=user.profile)
+        for friend in friends1:
+            friends.append(friend.myId)
+        friends2 = FriendList.objects.filter(myId=user.profile)
+        for friend in friends2:
+            friends.append(friend.user)
+        trades1 = TradeRequest.objects.filter(
+            user_from__in=friends).order_by('date')[:10]
+        trades2 = TradeRequest.objects.filter(
+            user_to__in=friends).order_by('date')[:10]
+        comments = Comment.objects.filter(
+            user__in=friends).order_by('date')[:10]
+        feed = sorted(
+            chain(comments, trades1, trades2),
+            key=attrgetter('date')
+        )
+        return render(request, 'home.html', {'cbs': crazybones, 'feed': feed[:10]})
+    print('feed: ', feed)
     return render(request, 'home.html', {'cbs': crazybones})
 
 
