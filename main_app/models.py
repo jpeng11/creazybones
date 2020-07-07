@@ -30,12 +30,22 @@ class Comment(models.Model):
         cb = Crazybone.objects.get(comment=self)
         return reverse('cb_detail', kwargs={'cb_id': cb.id})
 
+TRADE_STATUS = (
+    ('A', 'Accepted'),
+    ('R', 'Rejected'),
+    ('P', 'Pending')
+)
 class TradeRequest(models.Model):
     user_from = models.ForeignKey(Profile, related_name='user_from', on_delete=models.CASCADE)
     user_to = models.ForeignKey(Profile, related_name='user_to', on_delete=models.CASCADE)
     cb_wanted = models.ForeignKey(Crazybone, related_name='cb_wanted', on_delete=models.CASCADE)
     cb_offered = models.ForeignKey(Crazybone, related_name='cb_offered', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, blank=True)
+    status = models.CharField(
+        max_length=1,
+        choices=TRADE_STATUS,
+        default=[2][0]
+    )
     def __str__(self):
         return f"{self.user_from} <-> {self.user_to} ... {self.cb_wanted} <-> {self.cb_offered}"
 
@@ -47,4 +57,19 @@ class FriendList(models.Model):
         return f"{self.user} - {self.myId}"
 
 
+TYPE_OF_NOTIFICATION = (
+    ('T', 'Trade Request'),
+    ('F', 'Friend Request')
+)
+class Notification(models.Model):
+    notification_type = models.CharField(
+        max_length=1,
+        choices=TYPE_OF_NOTIFICATION,
+        default=TYPE_OF_NOTIFICATION[0][0]
+    )
+    noti_from = models.ForeignKey(Profile, related_name='noti_from', on_delete=models.CASCADE)
+    noti_to = models.ForeignKey(Profile, related_name='noti_to', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.noti_from} -> {self.noti_to} ; {self.notification_type}"
 
