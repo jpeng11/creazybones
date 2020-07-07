@@ -65,6 +65,15 @@
                 srcset=""
               /><a href="{% url 'trade'%}">Trade</a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="baseLi">
+              <img
+                src=""
+                alt=""
+                srcset=""
+              /><a href="{% url 'user_detail' user.id%}">Profile</a>
+            </li>
+            {% endif%}
           </ul>
           <hr />
         </div>
