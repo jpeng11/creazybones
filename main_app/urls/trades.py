@@ -4,6 +4,7 @@ from ..views import trades
 urlpatterns = [
     path('', trades.index, name='trade'),
     path('result/', trades.result, name='trade-result'),
-    path('tradecreate/', trades.create, name='trade-create'),
-    # path('<int>:user_id>', profile.other,)
+    path('create/', trades.create, name='trade-create'),
+    path('user/', trades.user, name='trade-user'),
+    path('action/<int:trade_id>', trades.action, name='trade-action')
 ]
