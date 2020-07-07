@@ -21,10 +21,10 @@
       {% for trade in trades_made %}
       <tr>
         <th>{{trade.date}}</th>
-        <th>{{trade.user_to}}</th>
+        <th>{{trade.user_to.user.username}}</th>
         <th>{{trade.cb_wanted}}</th>
         <th>{{trade.cb_offered}}</th>
-        <th>Awaiting Response...</th>
+        <th>{{trade.get_status_display}}</th>
       </tr>
       {% endfor %}
     </table>
@@ -44,16 +44,20 @@
       {% for trade in trades_received%}
       <tr>
         <th>{{trade.date}}</th>
-        <th>{{trade.user_to}}</th>
-        <th>{{trade.cb_wanted}}</th>
+        <th>{{trade.user_from.user.username}}</th>
         <th>{{trade.cb_offered}}</th>
+        <th>{{trade.cb_wanted}}</th>
         <th>
-          <form id="{{trade.id}}" action = "{% url 'trade-action' %}" method='post'>
+          {% if trade.status == "P" %}
+          <form id="{{trade.id}}" action = "{% url 'trade-action' trade.id %}" method='post'>
             {% csrf_token %}
             <input id="accept_trade_{{trade.id}}" name="accept_trade" type="text" style="display:none;">
             <button class="Yes" value="Yes">Yes</button>
             <button class="No" value="No">No</button>
           </form>
+          {% else %}
+          {{trade.get_status_display}}
+          {% endif %}
         </th>
       </tr>
       {% endfor %}

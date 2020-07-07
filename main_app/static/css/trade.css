@@ -55,10 +55,6 @@ button:hover{
   cursor:pointer;
 }
 
-button{
-  margin:0 8px;
-}
-
 .Yes{
   background: green;
   border:
@@ -82,4 +78,8 @@ button{
   justify-content: center;
   align-items: center;
   display: none;
+}
+  
+#popup button{
+    margin:0 8px;
 }
