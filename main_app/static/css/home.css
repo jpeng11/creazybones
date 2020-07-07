@@ -29,3 +29,15 @@ td {
 .td-1 {
   text-align: center;
 }
+
+ul {
+  list-style: none;
+  width: 90%;
+}
+.feed-li {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+.feed-li strong {
+  font-size: 1.5rem;
+}

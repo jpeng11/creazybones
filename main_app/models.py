@@ -18,15 +18,11 @@ class Profile(models.Model):
     cb = models.ManyToManyField(Crazybone)
 
     def __str__(self):
-<<<<<<< HEAD
-        return f"{self.user.username}"
-=======
         return f"{self.user} has {self.cb}"
 
     def get_absolute_url(self):
         return reverse("profile", kwargs={"user_id": self.id})
 
->>>>>>> e13b97b7ace746e6f6243a9ee3ac7faed2dbd1e0
 
 class Comment(models.Model):
     text = models.TextField(max_length=300)
