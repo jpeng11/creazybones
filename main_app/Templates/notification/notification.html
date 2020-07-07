@@ -6,10 +6,10 @@
 
 {% block content %}
 
-<table id="homeTable" style="background-color: rgb(0, 199, 199);">
+<table class="tb-1" style="background-color: rgb(0, 199, 199);">
   <tbody>
     <tr>
-      <td id="FriendsListTD">
+      <td class="td-1">
         <h1 style="text-align: center;">
           <span style="color: white; padding: 20px; text-shadow: 2px 2px black;">MY</span>
           <span style="color: white; text-shadow: 2px 2px black;">NOTIFICATIONS</span>
@@ -19,11 +19,15 @@
         {%for notification in my_notif%}
         <div id="notiDiv">
           <p style="display: inline;">{{notification}}</p>
-          <form method="post" action="{% url 'accept' pk=notification.noti_to.user.id %}" style="display: inline;">
+          <form method="post"
+            action="{% url 'accept' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
+            style="display: inline;">
             {% csrf_token %}
-            <button style="float:right">ACCEPT</button>
+            <button style="float:right">ACCEPT {{notification.noti_from.user.id}}</button>
           </form>
-          <form method="post" action="{% url 'reject' pk=notification.noti_to.user.id %}" style="display: inline;">
+          <form method="post"
+            action="{% url 'reject' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
+            style="display: inline;">
             {% csrf_token %}
             <button style="float:right">REJECT</button>
           </form>
@@ -34,7 +38,6 @@
     </tr>
   </tbody>
 </table>
-
 
 
 {% endblock %}

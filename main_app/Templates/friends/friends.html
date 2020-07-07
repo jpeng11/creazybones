@@ -6,10 +6,10 @@
 
 {% block content %}
 
-<table id="homeTable" style="background-color: pink;">
+<table class="tb-1" style="background-color: pink;">
   <tbody>
     <tr>
-      <td id="FriendsListTD">
+      <td class="td-1">
         <h1 style="text-align: center;">
           <span style="color: purple; padding: 20px; text-shadow: 2px 2px cornflowerblue;">FRIENDS</span>
           <span style="color: royalblue; text-shadow: 2px 2px white;">LIST</span>
@@ -17,7 +17,11 @@
 
         {% if friends %}
         {% for friend in friends%}
+        {% if friend.user.user != user %}
         <p>{{friend.user.user}}</p>
+        {% else %}
+        <p>{{friend.myId.user}}</p>
+        {% endif %}
         {% endfor %}
         {% else %}
         <p> No friends yet :( </p>
@@ -28,10 +32,10 @@
   </tbody>
 </table>
 
-<table id="homeTable" style="background-color: rgb(231, 209, 84);">
+<table class="tb-1" style="background-color: rgb(231, 209, 84);">
   <tbody>
     <tr>
-      <td id="SearchTD">
+      <td class="td-1">
         <h1 style="text-align: center;">
           <span style="color: white; padding: 20px; text-shadow: 2px 2px black;">SEARCH</span>
           <span style="color: white; text-shadow: 2px 2px black;">USERS</span>
@@ -42,7 +46,7 @@
           <p style="display: inline;">{{match}}</p>
           <form method="post" action="{% url 'addfriend' pk=match.user.id %}" style="display: inline;">
             {% csrf_token %}
-            <button style="float:right">ADD FRIEND</button>
+            <button style="float:right">ADD FRIEND {{match.user.id}}</button>
           </form>
         </div>
         {% endfor %}

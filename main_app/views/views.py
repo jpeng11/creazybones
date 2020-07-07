@@ -32,8 +32,9 @@ def home(request):
             chain(comments, trades1, trades2),
             key=attrgetter('date')
         )
+        return render(request, 'home.html', {'cbs': crazybones, 'feed': feed[:10]})
     print('feed: ', feed)
-    return render(request, 'home.html', {'cbs': crazybones, 'feed': feed[:10]})
+    return render(request, 'home.html', {'cbs': crazybones})
 
 
 def seed(req):

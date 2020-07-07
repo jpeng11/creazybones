@@ -9,9 +9,7 @@
         <img id="aboutImg" src="../static/img/about.png" />
         <p>
           <img src="images/aaa" />
-          <a href="https://en.wikipedia.org/wiki/Gogo%27s_Crazy_Bones"
-            >Crazy Bones</a
-          >
+          <a href="https://en.wikipedia.org/wiki/Gogo%27s_Crazy_Bones">Crazy Bones</a>
           are small colorful characters that come in hundreds of colors and
           designs, each one with a unique name, design, personality and special
           ability. Gogo's were inspired by games from ancient Greece where
@@ -38,21 +36,27 @@
         <img id="feedImg" src="../static/img/feed.png" />
         <ul class="feedList">
           {% for feed_item in feed %}
-            <li class="feed-li">
-              <div>
-                {% if not feed_item.text %}
-                  <h3>Trade!</h3>
-                  <a><strong>{{ feed_item.user_from.user.username }}</strong> wants to trade <a href="{% url 'cb_detail' feed_item.cb_offered.id %}">{{ feed_item.cb_offered }}</a> to <strong>{{ feed_item.user_to.user.username }}</strong> for <a href="{% url 'cb_detail' feed_item.cb_wanted.id %}">{{ feed_item.cb_wanted }}</a></h4>
-                  <p>{{  feed_item.date }}</p>
+          <li class="feed-li">
+            <div>
+              {% if not feed_item.text %}
+              <h3>Trade!</h3>
+              <a><strong>{{ feed_item.user_from.user.username }}</strong> wants to trade <a
+                  href="{% url 'cb_detail' feed_item.cb_offered.id %}">{{ feed_item.cb_offered }}</a> to
+                <strong>{{ feed_item.user_to.user.username }}</strong> for <a
+                  href="{% url 'cb_detail' feed_item.cb_wanted.id %}">{{ feed_item.cb_wanted }}</a></h4>
+                <p>{{  feed_item.date }}</p>
                 {% else %}
-                  <h3>Comment!</h3>
-                  <h4><strong>{{ feed_item.user.user.username }}</strong> said {{ feed_item.text }} about <a href="{% url 'cb_detail' feed_item.cb.id %}">{{ feed_item.cb }}</a></h4>
-                  <p>{{ feed_item.date }}</p>
+                <h3>Comment!</h3>
+                <h4><strong>{{ feed_item.user.user.username }}</strong> said {{ feed_item.text }} about <a
+                    href="{% url 'cb_detail' feed_item.cb.id %}">{{ feed_item.cb }}</a></h4>
+                <p>{{ feed_item.date }}</p>
                 {% endif %}
-              </div>
-            </li>
+            </div>
+          </li>
           {% empty %}
-            <li><p>Nothing to show..</p></li>
+          <li>
+            <p>Nothing to show..</p>
+          </li>
           {% endfor %}
         </ul>
       </td>
@@ -62,11 +66,10 @@
 {% else %}
 <table class="tb-1">
   <tbody>
-<img id="cbImg" src="../static/img/cb.png" /></
-    <tr>
-      <th class="td-1">Crazy Bone</th>
-      <th class="td-1">Image</th>
-      <th class="td-1">Description</th>
+    <img id="cbImg" src="../static/img/cb.png" /></ <tr>
+    <th class="td-1">Crazy Bone</th>
+    <th class="td-1">Image</th>
+    <th class="td-1">Description</th>
     </tr>
     {% for cb in cbs %}
     <tr>
@@ -83,15 +86,12 @@
   <tbody>
     <tr>
       <td class="td-1">
-        <img
-          style="width: 500px; margin: 0 auto; display: block;"
-          src="http://code.divshot.com/geo-bootstrap/img/test/construction.gif"
-        />
+        <img style="width: 500px; margin: 0 auto; display: block;"
+          src="http://code.divshot.com/geo-bootstrap/img/test/construction.gif" />
         <p style="background-color: orange; font-size: 25px;">
-          <i>Watch Out!</i> This area is <span style="color: blue;">u</span
-          ><span style="color: red; font-size: 50px;">n</span
-          ><span style="color: yellow;">d</span><span><u>e</u></span
-          ><span>r</span> construction!
+          <i>Watch Out!</i> This area is <span style="color: blue;">u</span><span
+            style="color: red; font-size: 50px;">n</span><span
+            style="color: yellow;">d</span><span><u>e</u></span><span>r</span> construction!
         </p>
       </td>
     </tr>
