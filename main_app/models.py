@@ -21,7 +21,7 @@ class Profile(models.Model):
         return f"{self.user}"
 
     def get_absolute_url(self):
-        return reverse("profile", kwargs={"user_id": self.id, 'pk': self.id})
+        return reverse("profile", kwargs={"user_id": self.id})
 
 
 class Comment(models.Model):
