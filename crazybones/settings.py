@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'crazybones.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crazybones',
+        'NAME': 'crazybones', 'USER': 'percy', 'PASSWORD': 'percy'
     }
 }
 
