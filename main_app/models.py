@@ -42,4 +42,18 @@ class FriendList(models.Model):
         return f"{self.user} - {self.myId}"
 
 
+TYPE_OF_NOTIFICATION = (
+    ('T', 'Trade Request'),
+    ('F', 'Friend Request')
+)
+class Notification(models.Model):
+    notification_type = models.CharField(
+        max_length=1,
+        choices=TYPE_OF_NOTIFICATION,
+        default=TYPE_OF_NOTIFICATION[0][0]
+    )
+    noti_from = models.ForeignKey(Profile, related_name='noti_from', on_delete=models.CASCADE)
+    noti_to = models.ForeignKey(Profile, related_name='noti_to', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.noti_from} -> {self.noti_to} ; {self.notification_type}"
