@@ -16,7 +16,7 @@ class Profile(models.Model):
     cb = models.ManyToManyField(Crazybone)
 
     def __str__(self):
-        return f"{self.user}"
+        return f"{self.user.username}"
 
 class Comment(models.Model):
     text = models.TextField(max_length=300)
