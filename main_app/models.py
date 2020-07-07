@@ -92,3 +92,10 @@ class Notification(models.Model):
     def __str__(self):
         return f"{self.noti_from} sent you a  {self.get_notification_type_display()}"
 
+
+class Clan(models.Model):
+    name = models.CharField(max_length=100)
+    members = models.ManyToManyField(Profile)
+
+    def __str__(self):
+        return f"{self.name} - {self.members}"
