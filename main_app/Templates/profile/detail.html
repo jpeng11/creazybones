@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/cb-detail.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
 {% endblock %} {% block content %}
 <h1>{{ user.username }}</h1>
 
@@ -7,11 +7,12 @@
   <tbody>
     <tr>
       <td class="td-1">First Name:</td>
-      {% if user.fist_name %}
+      <!-- {% if user.fist_name is True%}
       <td class="td-1">{{user.first_name}}</td>
       {% else %}
       <td class="td-1">null</td>
-      {%endif%}
+      {%endif%} -->
+      <td class="td-1">{{user.first_name}}</td>
     </tr>
     <tr>
       <td class="td-1">Last Name:</td>
@@ -44,52 +45,20 @@
 
 <hr />
 <h1>Crazybones</h1>
-<table class="tb-1">
-  <tbody>
-    <tr>
-      <th class="td-1">Crazy Bone</th>
-      <th class="td-1">Image</th>
-      <th class="td-1">Description</th>
-    </tr>
-    {% for cb in all_cb %}
-    <tr>
-      <td class="td-1">{{cb.name}}{{cb.id}}</td>
-      <td class="td-1">
-        {% if cb in user_cb %}
-        <img src="{{cb.img}}" />
-        {% else %}
-        <img src="{{cb.img}}" style="filter: grayscale(100%);" />
-        {% endif %}
-      </td>
-      <td class="td-1">{{cb.description}}</td>
-    </tr>
 
-    {% endfor %}
-  </tbody>
-</table>
-{% for cb in user_cb %}
-<p>{{cb.id}}</p>
-{% endfor %}
-
-<!-- <hr />
-<h1>Crazybone You Don't have</h1>
-<table class="tb-1">
-  <tbody>
-    <tr>
-      <th class="td-1">Crazy Bone</th>
-      <th class="td-1">Image</th>
-      <th class="td-1">Description</th>
-    </tr>
-    {% for cbs in cb_user_doesnot_own %}
-    <tr>
-      <td class="td-1">{{cbs.name}}</td>
-      <td class="td-1">
-        <img src="{{cbs.img}}" style="filter: grayscale(100%);" />
-      </td>
-      <td class="td-1">{{cbs.description}}</td>
-    </tr>
-
-    {% endfor %} -->
-<!-- </tbody>
-</table> -->
+<div class="grid-container">
+  {% for cb in all_cb %} {% if cb in user_cb %}
+  <div class="grid-item">
+    <a href="/crazybone/{{cb.id}}"><img src="{{cb.img}}" /></a>
+    <p>{{cb.name}}</p>
+  </div>
+  {% else %}
+  <div class="grid-item">
+    <a href="/crazybone/{{cb.id}}"
+      ><img src="{{cb.img}}" style="filter: grayscale(100%);"
+    /></a>
+    <p>{{cb.name}}</p>
+  </div>
+  {% endif %} {% endfor %}
+</div>
 {% endblock %}
