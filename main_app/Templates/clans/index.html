@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cb-detail.css' %}" />
+{% endblock %} {% block content %}
+<h1>Clans</h1>
+{% for clan in clans %}
+<h2>{{ clan.name }}</h2>
+{% empyty %}
+<h3>There don't seem to be any clans...</h3>
+{% endfor %}
+<form action="{% url 'clan_create' %}">
+  {% csrf_token %}
+  <input type="text" placeholder="Clan Name" />
+  <button type="submit">Create Clan</button>
+</form>
+{% endblock %}
