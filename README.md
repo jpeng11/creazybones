@@ -39,7 +39,6 @@ sccwer
 - [@ibrahimalhanich](https://github.com/ibrahimalhanich)
 - [@jpeng11](https://github.com/jpeng11)
 - [@banhpete](https://github.com/banhpete)
-- [@NullTamer](https://github.com/NullTamer)
 
 <p align="center">
   <img alt="CrazyBone" width="200px" src="https://vignette.wikia.nocookie.net/crazybonespedia/images/f/ff/Mascot101.png/revision/latest/scale-to-width-down/310?cb=20190222171713">

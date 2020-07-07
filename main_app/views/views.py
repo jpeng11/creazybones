@@ -22,9 +22,12 @@ def home(request):
         friends2 = FriendList.objects.filter(myId=user.profile)
         for friend in friends2:
             friends.append(friend.user)
-        trades1 = TradeRequest.objects.filter(user_from__in=friends).order_by('date')[:10]
-        trades2 = TradeRequest.objects.filter(user_to__in=friends).order_by('date')[:10]
-        comments = Comment.objects.filter(user__in=friends).order_by('date')[:10]
+        trades1 = TradeRequest.objects.filter(
+            user_from__in=friends).order_by('date')[:10]
+        trades2 = TradeRequest.objects.filter(
+            user_to__in=friends).order_by('date')[:10]
+        comments = Comment.objects.filter(
+            user__in=friends).order_by('date')[:10]
         feed = sorted(
             chain(comments, trades1, trades2),
             key=attrgetter('date')

@@ -18,10 +18,10 @@ class Profile(models.Model):
     cb = models.ManyToManyField(Crazybone)
 
     def __str__(self):
-        return f"{self.user} has {self.cb}"
+        return f"{self.user}"
 
     def get_absolute_url(self):
-        return reverse("profile", kwargs={"user_id": self.id})
+        return reverse("profile", kwargs={"user_id": self.id, 'pk': self.id})
 
 
 class Comment(models.Model):
@@ -43,6 +43,7 @@ TRADE_STATUS = (
     ('R', 'Rejected'),
     ('P', 'Pending')
 )
+
 
 class TradeRequest(models.Model):
     user_from = models.ForeignKey(
@@ -75,20 +76,30 @@ class FriendList(models.Model):
         return f"{self.user} - {self.myId}"
 
 
-
 TYPE_OF_NOTIFICATION = (
     ('T', 'Trade Request'),
     ('F', 'Friend Request')
 )
+
+
 class Notification(models.Model):
     notification_type = models.CharField(
         max_length=1,
         choices=TYPE_OF_NOTIFICATION,
         default=TYPE_OF_NOTIFICATION[0][0]
     )
-    noti_from = models.ForeignKey(Profile, related_name='noti_from', on_delete=models.CASCADE)
-    noti_to = models.ForeignKey(Profile, related_name='noti_to', on_delete=models.CASCADE)
+    noti_from = models.ForeignKey(
+        Profile, related_name='noti_from', on_delete=models.CASCADE)
+    noti_to = models.ForeignKey(
+        Profile, related_name='noti_to', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.noti_from} -> {self.noti_to} ; {self.notification_type}"
+        return f"{self.noti_from} sent you a  {self.get_notification_type_display()}"
 
+
+class Clan(models.Model):
+    name = models.CharField(max_length=100)
+    members = models.ManyToManyField(Profile)
+
+    def __str__(self):
+        return f"{self.name} - {self.members}"

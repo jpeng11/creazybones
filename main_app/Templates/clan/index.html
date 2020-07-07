@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/clan-index.css' %}" /> -->
+{% endblock %} {% block content %}
+<h1>Clans</h1>
+{% for clan in clans %}
+<a href="{% url 'clan_detail' clan.id %}"><h2>{{ clan.name }}</h2></a>
+{% empty %}
+<h3>There don't seem to be any clans...</h3>
+{% endfor %}
+<a href="{% url 'clan_create' %}">Create a new Clan</a>
+{% endblock %}
