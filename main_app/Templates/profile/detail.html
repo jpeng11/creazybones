@@ -1,9 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'css/cb-detail.css' %}"
-/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/cb-detail.css' %}" />
 {% endblock %} {% block content %}
 <h1>{{ user.username }}</h1>
 
@@ -47,7 +43,7 @@
 </table>
 
 <hr />
-<h1>Crazybone You have</h1>
+<h1>Crazybones</h1>
 <table class="tb-1">
   <tbody>
     <tr>
@@ -55,11 +51,15 @@
       <th class="td-1">Image</th>
       <th class="td-1">Description</th>
     </tr>
-    {% for cb in user_cb %}
+    {% for cb in all_cb %}
     <tr>
-      <td class="td-1">{{cb.name}}</td>
+      <td class="td-1">{{cb.name}}{{cb.id}}</td>
       <td class="td-1">
+        {% if cb in user_cb %}
         <img src="{{cb.img}}" />
+        {% else %}
+        <img src="{{cb.img}}" style="filter: grayscale(100%);" />
+        {% endif %}
       </td>
       <td class="td-1">{{cb.description}}</td>
     </tr>
@@ -67,8 +67,11 @@
     {% endfor %}
   </tbody>
 </table>
+{% for cb in user_cb %}
+<p>{{cb.id}}</p>
+{% endfor %}
 
-<hr />
+<!-- <hr />
 <h1>Crazybone You Don't have</h1>
 <table class="tb-1">
   <tbody>
@@ -86,7 +89,7 @@
       <td class="td-1">{{cbs.description}}</td>
     </tr>
 
-    {% endfor %}
-  </tbody>
-</table>
+    {% endfor %} -->
+<!-- </tbody>
+</table> -->
 {% endblock %}
