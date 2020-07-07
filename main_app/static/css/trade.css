@@ -25,27 +25,61 @@
   margin:0 auto;
 }
 
-/* Form */
-#trader table{
+/* Table */
+table{
   width:100%;
   margin:10px 0;
 }
 
-#trader table, th, td{
+table, th, td{
   border: 1px solid black;
 }
 
-#trader table td{
+table td{
   text-align:center;
 }
 
-#trader input[type="submit"]{
+input[type="submit"]{
   display:block;
   margin:0 auto;
 }
 
-#trader .form-row{
+.form-row{
   display:block;
   margin:8px auto;
   text-align:center;
+}
+
+/* Buttons */
+button:hover{
+  cursor:pointer;
+}
+
+button{
+  margin:0 8px;
+}
+
+.Yes{
+  background: green;
+  border:
+}
+
+.No{
+  background:red;
+}
+
+/* Pop Up */
+#popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  background:rgb(204,204,204);
+  width:325px;
+  height:125px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }

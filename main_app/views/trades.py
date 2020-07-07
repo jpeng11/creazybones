@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from main_app.models import Crazybone, TradeRequest
+from main_app.models import Crazybone, TradeRequest, Profile
 from django.contrib.auth.models import User
-from ..models import Profile
 from django.contrib.auth.decorators import login_required
 from main_app.forms import TradeSearchForm
 
-from ..forms import TradeSearchForm
 
 @login_required
 def index(req):
@@ -24,8 +22,7 @@ def result(req):
     radio_selected = False
     
     try: 
-        req.GET['error']
-        error = True
+        error = req.GET['error']
     except:
         error = None
 
@@ -80,7 +77,7 @@ def create(req):
     selected_values = req.POST['selected'].split('-')
 
     if req.user.username == selected_values[0]:
-        return redirect(req.META['HTTP_REFERER']+"&error=True")
+        return redirect(req.META['HTTP_REFERER']+"&error=tradewithself")
 
     try:
         new_user_from = req.user.profile
@@ -88,7 +85,21 @@ def create(req):
         new_cb_offered = new_user_from.cb.get(name__iexact=req.POST['offered'])
         new_cb_wanted = new_user_to.cb.get(name__iexact=selected_values[1])
         new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered)
-        return HttpResponse("<h1> Trade Created - See Admin Page for Now </h1>")
+        return redirect('trade-user')
     except Exception as err:
         print(err)
-        return HttpResponse("Something went wrong")
+        return redirect(req.META['HTTP_REFERER']+"&error=true")
+
+@login_required
+def user(req):
+    try:
+        trades_made = TradeRequest.objects.filter(user_from=req.user.profile)
+        trades_received = TradeRequest.objects.filter(user_to=req.user.profile)
+    except:
+        trades_made = None
+        trades_received = None
+    return render(req, 'trades/user.html', {'trades_made':trades_made, 'trades_received':trades_received})
+
+@login_required
+def action(req):
+    return HttpResponse(req.POST['accept_trade'])

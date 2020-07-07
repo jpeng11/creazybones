@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div id="trade-container">
+  <h1> Trade Requets You Made</h1>
+  {% if trades_made %}
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Trade Sent To</th>
+        <th>Crazy Bone Requested</th>
+        <th>You Offered</th>
+        <th>Trade Status</th>
+      </tr>
+      {% for trade in trades_made %}
+      <tr>
+        <th>{{trade.date}}</th>
+        <th>{{trade.user_to}}</th>
+        <th>{{trade.cb_wanted}}</th>
+        <th>{{trade.cb_offered}}</th>
+        <th>Awaiting Response...</th>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>You have not made any trades</p>
+  {% endif %}
+  <h1> Trade Requets Made to You</h1>
+  {% if trades_received %}
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Trade From</th>
+        <th>Crazy Bone Offered</th>
+        <th>Crazy Bone Requested</th>
+        <th>Accept/Decline</th>
+      </tr>
+      {% for trade in trades_received%}
+      <tr>
+        <th>{{trade.date}}</th>
+        <th>{{trade.user_to}}</th>
+        <th>{{trade.cb_wanted}}</th>
+        <th>{{trade.cb_offered}}</th>
+        <th>
+          <form id="{{trade.id}}" action = "{% url 'trade-action' %}" method='post'>
+            {% csrf_token %}
+            <input id="accept_trade_{{trade.id}}" name="accept_trade" type="text" style="display:none;">
+            <button class="Yes" value="Yes">Yes</button>
+            <button class="No" value="No">No</button>
+          </form>
+        </th>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>You have not received any trades</p>
+  {% endif %}
+</div>
+
+<script src="{% static 'javascript/trade.js' %}" defer></script>
+{% endblock %}
+
+{% block popup %}
+<div id="popup">
+  <p>Are you sure you want to make this trade?</p>
+  <div>
+    <button class="Yes">Yes</button>
+    <button class="No">No</button>
+  </div>
+</div>
+{% endblock %}

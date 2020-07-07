@@ -42,8 +42,10 @@
       </select>
     </div>
     <input type="submit" value="Submit" />
-    {% if error %}
+    {% if error == "tradewithself" %}
     <p class="warning">You can't trade with yourself!</p>
+    {% elif error != None %}
+    <p class="warning">Something went wrong! Try Again or Contact the admin</p>
     {% endif %}
   </form>
   {% else %}
