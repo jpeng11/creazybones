@@ -1,0 +1,17 @@
+* {
+  text-align: center;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 799px;
+  margin-bottom: 10px;
+}
+.grid-item {
+  border-style: ridge;
+  width: 260px;
+}
+
+table {
+  margin-bottom: 20px;
+}

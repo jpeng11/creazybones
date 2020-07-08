@@ -16,7 +16,8 @@ def index(req):
 def detail(req, clan_id):
     current_user = req.user
     clan = Clan.objects.get(id=clan_id)
-    return render(req, 'clan/detail.html', {'clan': clan, 'current_user': current_user})
+    user_without_clan = User.objects.filter(profile__clan=None)
+    return render(req, 'clan/detail.html', {'clan': clan, 'current_user': current_user, 'user_without_clan': user_without_clan})
 
 
 class ClanCreate(LoginRequiredMixin, CreateView):
@@ -33,5 +34,8 @@ def join(req, clan_id):
 
 
 @login_required
-def addMember(req, clan_id):
+def add_new_member(req, clan_id):
+    selected_user = req.POST['selected']
     clan = Clan.objects.get(id=clan_id)
+    clan.members.add(User.objects.get(username=selected_user).profile)
+    return redirect(f'/clan/{clan_id}')
