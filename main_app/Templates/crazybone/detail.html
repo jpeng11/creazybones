@@ -26,8 +26,9 @@
   {% for owner in users_with_cb %}
   <li>
     <p>
+      <a href="{% url 'user_detail' owner.user.id %}">{{owner.user.username}}</a> -
       <a href="/trades/result?search_method=direct&search_query={{ cb.id }}&user_id={{ owner.id }}"
-        >{{owner.user.username}}</a
+        >Trade</a
       >
     </p>
   </li>
