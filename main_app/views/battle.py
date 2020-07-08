@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from ..models import Crazybone, Comment, Profile, Battle
+from ..models import Crazybone, Comment, Profile, Battle, Notification
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -86,6 +86,7 @@ def create(req):
     defender_cb = Crazybone.objects.get(name=def_cb[1])
     challenger_cb = Crazybone.objects.get(name=req.POST['challenger_cb'])
     battle = Battle.objects.create(challenger=req.user.profile, defender=defender, challenger_cb=challenger_cb, defender_cb=defender_cb, turn='D')
+    Notification.objects.create(notification_type='G', noti_to=battle.defender, noti_from=battle.challenger)
     return redirect('battle_display', battle_id=battle.id)
 
 @login_required

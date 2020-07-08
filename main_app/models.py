@@ -72,6 +72,7 @@ class Notification(models.Model):
         Profile, related_name='noti_from', on_delete=models.CASCADE)
     noti_to = models.ForeignKey(
         Profile, related_name='noti_to', on_delete=models.CASCADE)
+    notif_id = models.IntegerField()
 
     def __str__(self):
         return f"{self.noti_from} sent you a  {self.get_notification_type_display()}"
