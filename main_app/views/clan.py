@@ -5,23 +5,33 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
+
 @login_required
 def index(req):
     clans = Clan.objects.all()[:10]
     return render(req, 'clan/index.html', {'clans': clans})
 
+
 @login_required
 def detail(req, clan_id):
+    current_user = req.user
     clan = Clan.objects.get(id=clan_id)
-    return render(req, 'clan/detail.html', {'clan': clan})
+    return render(req, 'clan/detail.html', {'clan': clan, 'current_user': current_user})
+
 
 class ClanCreate(LoginRequiredMixin, CreateView):
     model = Clan
     fields = ['name']
     success_url = '/clan/'
 
+
 @login_required
 def join(req, clan_id):
     clan = Clan.objects.get(id=clan_id)
     clan.members.add(req.user.profile)
     return redirect(f'/clan/{clan_id}')
+
+
+@login_required
+def addMember(req, clan_id):
+    clan = Clan.objects.get(id=clan_id)
