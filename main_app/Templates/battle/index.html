@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
 {% endblock %} {% block content %}
 <div id="trade-container">
   <h1>Battle your Friends</h1>
@@ -11,7 +11,7 @@
   <form id="finder" method="get" action="{% url 'battle_req_result' %}">
     {{form}}
     <input type="submit" name="submit" value="Submit" />{% if error %}
-    <p class="warning">You can't battle with yourself!</p>
+    <p class="warning">{{ error }}</p>
     {% endif %}
   </form>
 </div>

@@ -78,7 +78,9 @@ class FriendList(models.Model):
 
 TYPE_OF_NOTIFICATION = (
     ('T', 'Trade Request'),
-    ('F', 'Friend Request')
+    ('F', 'Friend Request'),
+    ('B', 'Battle Request'),
+    ('M', 'Battle Move'),
 )
 
 
