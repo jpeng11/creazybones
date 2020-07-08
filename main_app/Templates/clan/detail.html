@@ -3,10 +3,10 @@
 {% endblock %} {% block content %}
 <h1>{{ clan.name }}</h1>
 <h3>Members:</h3>
-{% for member in clans.member_set.all %}
-<h2>{{ member.user.username }}</h2>
+{% for member in clan.members.all %}
+<h2><a href="{% url 'user_detail' member.user.id %}">{{ member.user.username }}</a></h2>
 {% empty %}
 <h3>There don't seem to be any members...</h3>
 {% endfor %}
-<a href="#">Join Clan</a>
+<a href="{% url 'clan_join' clan.id %}">Join Clan</a>
 {% endblock %}

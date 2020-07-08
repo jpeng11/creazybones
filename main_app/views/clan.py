@@ -19,3 +19,9 @@ class ClanCreate(LoginRequiredMixin, CreateView):
     model = Clan
     fields = ['name']
     success_url = '/clan/'
+
+@login_required
+def join(req, clan_id):
+    clan = Clan.objects.get(id=clan_id)
+    clan.members.add(req.user.profile)
+    return redirect(f'/clan/{clan_id}')
