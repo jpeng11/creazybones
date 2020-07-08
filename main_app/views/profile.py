@@ -9,16 +9,22 @@ from ..models import Profile, Crazybone
 @login_required
 def user_profile(request, user_id):
     current_user = request.user
-    user_profile = User.objects.get(id=user_id)
-    user_cb = user_profile.profile.cb.all()
-    all_cb = Crazybone.objects.all().order_by('id')
+    try:
+        user_profile = User.objects.get(id=user_id)
+        user_cb = user_profile.profile.cb.all()
+        all_cb = Crazybone.objects.all().order_by('id')
 
-    return render(request,
-                  'profile/detail.html', {
-                      'current_user': current_user,
-                      'user_profile': user_profile,
-                      'user_cb': user_cb,
-                      'all_cb': all_cb})
+        return render(request,
+                      'profile/detail.html', {
+                          'current_user': current_user,
+                          'user_profile': user_profile,
+                          'user_cb': user_cb,
+                          'all_cb': all_cb})
+    except:
+        user_profile = None
+        return render(request,
+                      'profile/detail.html', {
+                          'current_user': current_user, 'user_profile': user_profile, })
 
 
 class profileUpdate(UpdateView):

@@ -1,8 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
 {% endblock %} {% block content %}
+{% if not user_profile %}
+<h1>User not exists</h1>
+{%else%}
 <h1>{{ user_profile.username }}</h1>
-
 <table class="tb-1">
   <tbody>
     <tr>
@@ -71,5 +73,6 @@
     <p>{{cb.name}}</p>
   </div>
   {% endif %} {% endfor %}
+{%endif%}
 </div>
 {% endblock %}
