@@ -30,6 +30,14 @@
       {%endif%}
     </tr>
     <tr>
+      <td class="td-1">Clans:</td>
+      {% for clan in user.profile.clan_set.all %}
+      <td class="td-1">{{clan.name}}</td>
+      {% empty %}
+      <td class="td-1">null</td>
+      {%endfor%}
+    </tr>
+    <tr>
       <td class="td-1">Number of Crazybone You Own</td>
       <td class="td-1">{{user_cb.count}}</td>
     </tr>
@@ -57,9 +65,7 @@
   </div>
   {% else %}
   <div class="grid-item">
-    <a href="/crazybone/{{cb.id}}"
-      ><img src="{{cb.img}}" style="filter: grayscale(100%);"
-    /></a>
+    <a href="/crazybone/{{cb.id}}"><img src="{{cb.img}}" style="filter: grayscale(100%);" /></a>
     <p>{{cb.name}}</p>
   </div>
   {% endif %} {% endfor %}
