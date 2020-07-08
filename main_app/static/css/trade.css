@@ -1,85 +1,86 @@
-.warning{
-  color:red;
+.warning {
+  color: red;
 }
 
-#trade-container{
+#trade-container {
   padding: 10px 10px;
 }
 
 /* Finder Form */
-#finder .form-row{
+#finder .form-row {
   padding: 8px;
 }
 
-#finder .form-row p{
-  padding:0px;
-  margin:0;
+#finder .form-row p {
+  padding: 0px;
+  margin: 0;
 }
 
-#finder .form-row input[type="radio"]{
-  margin:0 5px;
+#finder .form-row input[type="radio"] {
+  margin: 0 5px;
 }
 
-#finder .form-row input[type="submit"]{
-  display:block;
-  margin:0 auto;
+#finder .form-row input[type="submit"] {
+  display: block;
+  margin: 0 auto;
 }
 
 /* Table */
-table{
-  width:100%;
-  margin:10px 0;
+table {
+  width: 100%;
+  margin: 10px 0;
 }
 
-table, th, td{
+table,
+th,
+td {
   border: 1px solid black;
 }
 
-table td{
-  text-align:center;
+table td {
+  text-align: center;
 }
 
-input[type="submit"]{
-  display:block;
-  margin:0 auto;
+input[type="submit"] {
+  display: block;
+  margin: 0 auto;
 }
 
-.form-row{
-  display:block;
-  margin:8px auto;
-  text-align:center;
+.form-row {
+  display: block;
+  margin: 8px auto;
+  text-align: center;
 }
 
 /* Buttons */
-button:hover{
-  cursor:pointer;
+button:hover {
+  cursor: pointer;
 }
 
-.Yes{
+.Yes {
   background: green;
-  border:
 }
 
-.No{
-  background:red;
+.No {
+  background: red;
 }
 
 /* Pop Up */
-#popup{
-  position:fixed;
-  top:50%;
-  left:50%;
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  background:rgb(204,204,204);
-  width:325px;
-  height:125px;
-  display:flex;
+  background: rgb(204, 204, 204);
+  width: 325px;
+  height: 125px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   display: none;
 }
-  
-#popup button{
-    margin:0 8px;
+
+#popup button {
+  margin: 0 8px;
 }

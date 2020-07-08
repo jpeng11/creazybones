@@ -1,40 +1,50 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
 {% endblock %} {% block content %}
-<h1>{{ user.username }}</h1>
-
+{% if not user_profile %}
+<h1>User not exists</h1>
+{%else%}
+<h1>{{ user_profile.username }}</h1>
 <table class="tb-1">
   <tbody>
     <tr>
       <td class="td-1">First Name:</td>
-      {% if user.first_name %}
-      <td class="td-1">{{user.first_name}}</td>
+      {% if user_profile.first_name %}
+      <td class="td-1">{{user_profile.first_name}}</td>
       {% else %}
       <td class="td-1">null</td>
       {%endif%}
     </tr>
     <tr>
       <td class="td-1">Last Name:</td>
-      {% if user.last_name %}
-      <td class="td-1">{{user.last_name}}</td>
+      {% if user_profile.last_name %}
+      <td class="td-1">{{user_profile.last_name}}</td>
       {% else %}
       <td class="td-1">null</td>
       {%endif%}
     </tr>
     <tr>
       <td class="td-1">Email:</td>
-      {% if user.email %}
-      <td class="td-1">{{user.email}}</td>
+      {% if user_profile.email %}
+      <td class="td-1">{{user_profile.email}}</td>
       {% else %}
       <td class="td-1">null</td>
       {%endif%}
     </tr>
     <tr>
       <td class="td-1">Clans:</td>
+<<<<<<< HEAD
       <td class="td-1">
         {% for clan in user.profile.clan_set.all %}
         <a href="{% url 'clan_detail' clan.id %}">{{clan.name}}</a> {% empty %} null {%endfor%}
       </td>
+=======
+      {% for clan in user_profile.profile.clan_set.all %}
+      <td class="td-1">{{clan.name}}</td>
+      {% empty %}
+      <td class="td-1">null</td>
+      {%endfor%}
+>>>>>>> 0f36135d5b43cb01562d1922640f73b49a3c4ce5
     </tr>
     <tr>
       <td class="td-1">Number of Crazybone You Own</td>
@@ -42,14 +52,16 @@
     </tr>
     <tr>
       <td class="td-1">Join Date</td>
-      <td class="td-1">{{user.date_joined}}</td>
+      <td class="td-1">{{user_profile.date_joined}}</td>
     </tr>
+    {% if user_profile.id == current_user.id %}
     <tr>
       <td class="td-1"></td>
       <td class="td-1">
-        <button><a href="{% url 'user_update' user.id %}">EDIT</a></button>
+        <button><a href="{% url 'user_update' user_profile.id %}">EDIT</a></button>
       </td>
     </tr>
+    {%endif%}
   </tbody>
 </table>
 
@@ -68,5 +80,6 @@
     <p>{{cb.name}}</p>
   </div>
   {% endif %} {% endfor %}
+{%endif%}
 </div>
 {% endblock %}
