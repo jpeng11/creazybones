@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Crazybone, Profile, Comment, TradeRequest, FriendList, Notification
+from .models import Crazybone, Profile, Comment, TradeRequest, FriendList, Notification, Battle
 # Register your models here.
 
 admin.site.register(Crazybone)
@@ -8,3 +8,4 @@ admin.site.register(Comment)
 admin.site.register(TradeRequest)
 admin.site.register(FriendList)
 admin.site.register(Notification)
+admin.site.register(Battle)

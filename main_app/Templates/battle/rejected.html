@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
+{% endblock %} {% block content %}
+<h1>Battle!! rejected</h1>
+<h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
+<p>It is not your turn or you are not a part of this battle</p>
+{% endblock %}

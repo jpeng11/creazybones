@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
+{% endblock %} {% block content %}
+<h1>Battle!! pending</h1>
+<h2>{{ battle.challenger.user.username }} VS {{ battle.defender.user.username }}</h2>
+<p>Battle pending..</p>
+{% endblock %}

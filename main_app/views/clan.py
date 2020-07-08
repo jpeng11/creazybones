@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from ..models import Crazybone, Comment, Profile, Clan
+from ..models import Clan
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
