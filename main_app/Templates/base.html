@@ -30,6 +30,30 @@
               <a href="{% url 'signup' %}"><button>Sign Up</button></a>
             </li>
           </ul>
+          <li class="baseLi">
+            <img src="https://web.archive.org/web/20091020152706/http://hk.geocities.com/ndhufood/images/cute03/01.gif"
+              alt="" srcset="" /><a href="{% url 'friends'%}">Friends</a>
+          </li>
+          {% if user.profile.noti_to.first %}
+          <li class="baseLi">
+            <img src="https://web.archive.org/web/20091027183146/http://geocities.com/dancearea/yellowalert.gif" alt=""
+              srcset="" style="width: 30px;" /><a href="{% url 'notifications'%}">Notifications
+              <span style="background-color: white;">({{user.profile.noti_to.all.count}})</span></a>
+          </li>
+          {% else %}
+          <li class="baseLi">
+            <img src="https://web.archive.org/web/20091027183146/http://geocities.com/dancearea/yellowalert.gif" alt=""
+              srcset="" style="width: 30px;" /><a href="{% url 'notifications'%}">Notifications</a>
+          </li>
+          {% endif %}
+          <li class="baseLi">
+            <img src="https://web.archive.org/web/20091020075650/http://hk.geocities.com/edgar_y2628749/hi.gif" alt=""
+              srcset="" style="width: 50px;" /><a href="{% url 'user_detail' user.id%}">Profile</a>
+          </li>
+          <li class="baseLi">
+            <img src="https://i.pinimg.com/originals/54/67/69/54676900be1e3a03bd1106ac6e4a943f.gif" alt="" srcset=""
+              style="width: 50px;" /><a href="{% url 'clan_index' %}">Clans</a>
+          </li>
           {% endif %}
         </div>
         <div>
