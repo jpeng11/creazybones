@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}" />
+{% endblock %} {% block content %}
+<div id="trade-container">
+  <h1>Battle your Friends</h1>
+  {% if results %} {% if results != "No user has that Crazy Bone yet." %}
+  <a href="{% url 'battle_index' %}">Try another Battle Search</a>
+  <form id="trader" method="post" action="{% url 'battle_create'%}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Crazy Bone</th>
+        <th>Pick One to Battle</th>
+      </tr>
+      {% for result in results %}
+      <tr>
+        <td>{{result.user}}</td>
+        <td>{{result.cb}}</td>
+        <td>
+          <input
+            type="radio"
+            name="defender-cb"
+            value="{{result.user}}-{{result.cb}}"
+            {%
+            if
+            radio_selected
+            %}
+            checked
+            {%
+            endif
+            %}
+            required
+          />
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="form-row">
+      <label for="offered">Select which Crazy Bone you would like to throw into the ring</label>
+      <select id="offered" name="challenger_cb">
+        {% for crazybone in user_crazybones%}
+        <option value="{{crazybone}}">
+          {{crazybone.name}}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <input type="submit" value="Submit" />
+    {% if error == "tradewithself" %}
+    <p class="warning">You can't battle with yourself!</p>
+    {% elif error != None %}
+    <p class="warning">Something went wrong! Try Again or Contact the admin</p>
+    {% endif %}
+  </form>
+  {% else %}
+  <p>{{results}} <a href="{% url 'battle_index' %}">Look for another Crazy Bone.</a></p>
+  {% endif %} {% else %}
+  <p>
+    No results found. Make sure there are no typos in your spelling.
+    <a href="{% url 'battle_index' %}">Try Again</a>
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

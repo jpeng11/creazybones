@@ -10,5 +10,6 @@ urlpatterns = [
     path('crazybone/', include('main_app.urls.crazybone')),
     path('trades/', include('main_app.urls.trades')),
     path('clan/', include('main_app.urls.clan')),
+    path('battle/', include('main_app.urls.battle')),
     path('seed/', views.seed, name='seed'),
 ]

@@ -31,11 +31,10 @@
     </tr>
     <tr>
       <td class="td-1">Clans:</td>
-      {% for clan in user.profile.clan_set.all %}
-      <td class="td-1">{{clan.name}}</td>
-      {% empty %}
-      <td class="td-1">null</td>
-      {%endfor%}
+      <td class="td-1">
+        {% for clan in user.profile.clan_set.all %}
+        <a href="{% url 'clan_detail' clan.id %}">{{clan.name}}</a> {% empty %} null {%endfor%}
+      </td>
     </tr>
     <tr>
       <td class="td-1">Number of Crazybone You Own</td>
