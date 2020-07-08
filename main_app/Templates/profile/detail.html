@@ -33,11 +33,18 @@
     </tr>
     <tr>
       <td class="td-1">Clans:</td>
+<<<<<<< HEAD
+      <td class="td-1">
+        {% for clan in user.profile.clan_set.all %}
+        <a href="{% url 'clan_detail' clan.id %}">{{clan.name}}</a> {% empty %} null {%endfor%}
+      </td>
+=======
       {% for clan in user_profile.profile.clan_set.all %}
       <td class="td-1">{{clan.name}}</td>
       {% empty %}
       <td class="td-1">null</td>
       {%endfor%}
+>>>>>>> 0f36135d5b43cb01562d1922640f73b49a3c4ce5
     </tr>
     <tr>
       <td class="td-1">Number of Crazybone You Own</td>
