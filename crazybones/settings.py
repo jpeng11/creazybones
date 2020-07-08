@@ -80,7 +80,7 @@ ABSOLUTE_URL_OVERRIDES = {'auth.user': lambda u: f"/profile/{u.id}"}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crazybones',
+        'NAME': 'crazybones', 'USER': 'percy', 'PASSWORD': 'percy'
     }
 }
 

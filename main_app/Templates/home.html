@@ -67,22 +67,22 @@
 <table class="tb-1">
   <tbody>
     <img id="cbImg" src="../static/img/cb.png" /></ <tr>
-    <th class="td-1">Crazy Bone</th>
+    <th class="td-1 cb-name">Crazy Bone</th>
     <th class="td-1">Image</th>
-    <th class="td-1">Description</th>
+    <th class="td-1 cb-description" >Description</th>
     </tr>
     {% for cb in cbs %}
     <tr>
-      <td class="td-1">{{cb.name}}</td>
+      <td class="td-1 cb-name">{{cb.name}}</td>
       <td class="td-1"><img src="{{cb.img}}" /></td>
-      <td class="td-1">{{cb.description}}</td>
+      <td class="td-1 cb-description">{{cb.description}}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 {% endif %}
 <hr />
-<table class="tb-1">
+<table class="tb-1 con">
   <tbody>
     <tr>
       <td class="td-1">

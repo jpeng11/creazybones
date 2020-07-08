@@ -1,8 +1,8 @@
 <div align="center">
   <br>
   <img alt="Crazy Bones" src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524" width="500px">
-  <h1>XXXXX</h1>
-  <strong><a href="https://crazybone.herokuapp.com/">Crazy Bones</a></strong>
+  <h1><a href="https://crazybone.herokuapp.com/">Crazy Bones</a></h1>
+  <strong>xxxxx</strong>
 </div>
 
 ## What is Crazy Bones
@@ -21,11 +21,15 @@
 
 sccwer
 
-### Tech Stack
+### Tech Stack We Used
 
-- [Python](https://www.python.org/downloads/) 3.8 or higher
-- [Django](https://www.djangoproject.com/download/) 3.0.8 or higher
-- [PostgreSQL](https://www.postgresql.org/download/) 11 or higher
+- Local
+  - [Python](https://www.python.org/downloads/) 3.8
+  - [Django](https://www.djangoproject.com/download/) 3.0.8
+  - [PostgreSQL](https://www.postgresql.org/download/) 12
+- Live
+  - [Heroku](https://www.heroku.com)
+  - [Heroku Postgres](https://www.heroku.com/postgres)
 
 ## Development Documentation
 
