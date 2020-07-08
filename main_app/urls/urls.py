@@ -11,5 +11,5 @@ urlpatterns = [
     path('trades/', include('main_app.urls.trades')),
     path('clan/', include('main_app.urls.clan')),
     path('battle/', include('main_app.urls.battle')),
-    path('seed/', views.seed, name='seed'),
+    # path('seed/', views.seed, name='seed'),
 ]
