@@ -103,3 +103,49 @@ class Clan(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.members}"
+
+WINNER = (
+    ('N', 'None'),
+    ('C', 'Challenger'),
+    ('D', 'Defender')
+)
+SHOT = (
+    ('L', 'Left'),
+    ('H', 'Hit'),
+    ('R', 'Right')
+)
+
+
+class Battle(models.Model):
+    winner = models.CharField(
+        max_length=1,
+        choices=WINNER,
+        default=WINNER[0][0]
+    )
+
+    shot = models.CharField(
+        max_length=1,
+        choices=SHOT,
+        default=SHOT[0][0]
+    )
+
+    turn = models.CharField(
+        max_length=1,
+        choices=WINNER[1:2],
+        default=WINNER[1][0]
+    )
+
+    challenger = models.ForeignKey(
+        Profile, related_name='challenger', on_delete=models.CASCADE)
+
+    defender = models.ForeignKey(
+        Profile, related_name='defender', on_delete=models.CASCADE)
+
+    defender_cb = models.ForeignKey(
+        Crazybone, related_name='defender_cb', on_delete=models.CASCADE)
+    
+    challenger_cb = models.ForeignKey(
+        Crazybone, related_name='challenger_cb', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Battle: {self.id}"
