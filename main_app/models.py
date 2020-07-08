@@ -147,5 +147,7 @@ class Battle(models.Model):
     challenger_cb = models.ForeignKey(
         Crazybone, related_name='challenger_cb', on_delete=models.CASCADE)
 
+    accepted = models.BooleanField(default=False)
+
     def __str__(self):
         return f"Battle: {self.id}"
