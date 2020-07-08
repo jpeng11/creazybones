@@ -8,13 +8,15 @@ from ..models import Profile, Crazybone
 
 @login_required
 def user_profile(request, user_id):
-    user = User.objects.get(id=user_id)
-    user_cb = user.profile.cb.all()
+    current_user = request.user
+    user_profile = User.objects.get(id=user_id)
+    user_cb = user_profile.profile.cb.all()
     all_cb = Crazybone.objects.all().order_by('id')
 
     return render(request,
                   'profile/detail.html', {
-                      'user': user,
+                      'current_user': current_user,
+                      'user_profile': user_profile,
                       'user_cb': user_cb,
                       'all_cb': all_cb})
 
