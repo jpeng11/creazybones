@@ -35,8 +35,8 @@
       <label for="offered">Select which Crazy Bone you would like to offer</label>
       <select id="offered" name="offered">
         {% for crazybone in user_crazybones%}
-        <option value="{{crazybone.name}}">
-          {{crazybone.name}}
+        <option value="{{crazybone}}">
+          {{crazybone}}
         </option>
         {% endfor %}
       </select>
