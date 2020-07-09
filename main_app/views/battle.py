@@ -81,16 +81,17 @@ def result(req):
 
 @login_required
 def create(req):
+    #create notification
     def_cb = req.POST['defender-cb'].split('-')
     defender = User.objects.get(username__iregex=f'^{def_cb[0]}$').profile
     defender_cb = Crazybone.objects.get(name=def_cb[1])
     challenger_cb = Crazybone.objects.get(name=req.POST['challenger_cb'])
     battle = Battle.objects.create(challenger=req.user.profile, defender=defender, challenger_cb=challenger_cb, defender_cb=defender_cb, turn='D')
-    Notification.objects.create(notification_type='G', noti_to=battle.defender, noti_from=battle.challenger)
     return redirect('battle_display', battle_id=battle.id)
 
 @login_required
 def display(req, battle_id):
+    #delete old notification
     battle = Battle.objects.get(id=battle_id)
     if req.user.profile.id == battle.challenger.id or req.user.profile.id == battle.defender.id:
         if not battle.accepted:
@@ -142,6 +143,7 @@ def error(req, battle_id):
     return render(req, 'battle/rejected.html', {'battle': battle})
 
 def move(req, battle_id):
+    # create notification
     move = req.POST['move']
     battle = Battle.objects.get(id=battle_id)
     last_turn = battle.turn
