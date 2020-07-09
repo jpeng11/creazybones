@@ -69,7 +69,7 @@ def result(req):
         except:
             results = None
 
-    return render(req, 'battle/results.html', {'results': results, 'user_crazybones':user_crazybones, 'search_method':search_method, 'radio_selected': radio_selected, 'error':error})
+    return render(req, 'trades/results.html', {'results': results, 'user_crazybones':user_crazybones, 'search_method':search_method, 'radio_selected': radio_selected, 'error':error})
 
 @login_required
 def create(req):
