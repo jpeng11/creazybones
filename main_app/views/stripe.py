@@ -32,10 +32,10 @@ def create_checkout_session(request):
                 mode='payment',
                 line_items=[
                     {
-                        'name': 'T-shirt',
+                        'name': '10 packs of Crazy Bone loot bags',
                         'quantity': 1,
-                        'currency': 'usd',
-                        'amount': '2000',
+                        'currency': 'cad',
+                        'amount': '1000',
                     }
                 ]
             )
