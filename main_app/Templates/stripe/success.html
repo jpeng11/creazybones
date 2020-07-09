@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/stripe.css' %}" />
+{% endblock %} {% block content %}
+<h1>Your payment successded</h1>
+<hr />
+{% if cbs %}
+<div class="grid-container">
+  {% for cb in cbs %}
+  <div class="grid-item">
+    <a href="/crazybone/{{cb.id}}"><img src="{{cb.img}}" /></a>
+    <p>{{cb.name}}</p>
+  </div>
+  {% endfor %}
+</div>
+{%endif%}
+<a href="{% url 'user_detail' user.id%}">Back</a>
+{%endblock%}

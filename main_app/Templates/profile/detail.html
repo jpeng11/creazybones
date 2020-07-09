@@ -1,7 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
-{% endblock %} {% block content %}
-{% if not user_profile %}
+<script src="https://js.stripe.com/v3/"></script>
+<script defer src="{% static 'javascript/stripe.js' %}"></script>
+{% endblock %} {% block content %} {% if not user_profile %}
 <h1>User not exists</h1>
 {%else%}
 <h1>{{ user_profile.username }}</h1>
@@ -35,7 +36,8 @@
       <td class="td-1">Clans:</td>
       <td class="td-1">
         {% for clan in user.profile.clan_set.all %}
-        <a href="{% url 'clan_detail' clan.id %}">{{clan.name}}</a> {% empty %} null {%endfor%}
+        <a href="{% url 'clan_detail' clan.id %}">{{clan.name}}</a> {% empty %}
+        null {%endfor%}
       </td>
     </tr>
     <tr>
@@ -50,7 +52,9 @@
     <tr>
       <td class="td-1"></td>
       <td class="td-1">
-        <button><a href="{% url 'user_update' user_profile.id %}">EDIT</a></button>
+        <button>
+          <a href="{% url 'user_update' user_profile.id %}">EDIT</a>
+        </button>
       </td>
     </tr>
     {%endif%}
@@ -58,6 +62,7 @@
 </table>
 
 <hr />
+
 <h1>Crazybones</h1>
 
 <div class="grid-container">
@@ -68,10 +73,14 @@
   </div>
   {% else %}
   <div class="grid-item">
-    <a href="/crazybone/{{cb.id}}"><img src="{{cb.img}}" style="filter: grayscale(100%);" /></a>
+    <a href="/crazybone/{{cb.id}}"
+      ><img src="{{cb.img}}" style="filter: grayscale(100%);"
+    /></a>
     <p>{{cb.name}}</p>
   </div>
-  {% endif %} {% endfor %}
-{%endif%}
+  {% endif %} {% endfor %} {%endif%}
 </div>
+<hr />
+<h1>Purchase packs of 10 crazybone</h1>
+<button id="submitBtn">Payment</button>
 {% endblock %}
