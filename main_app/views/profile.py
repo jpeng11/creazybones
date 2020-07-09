@@ -13,16 +13,9 @@ def user_profile(request, user_id):
         user_profile = User.objects.get(id=user_id)
         user_cb = user_profile.profile.cb.all()
         user_cb_qty = 0
-        for cbP in Cb_Profile.objects.filter(profile=current_user.profile):
+        for cbP in Cb_Profile.objects.filter(profile=user_profile.profile):
             user_cb_qty += cbP.qty
         all_cb = Crazybone.objects.all().order_by('id')
-        cbs = []
-        for cb in Crazybone.objects.all().order_by('id'):
-            # if cb in user_cb:
-            #     cbs.append({'id':cb.id, 'name':cb.name, 'qty':Cb_Profile.objects.get(cb=cb, profile=current_user.profile).qty})
-            # else:
-            #     cbs.append({'id':cb.id,'name':cb.name})
-            pass
 
         return render(request,
                       'profile/detail.html', {
