@@ -9,8 +9,8 @@
 {% block content %}
 <div id="trade-container">
   <h1> Trade your Crazy Bones</h1>
-  <p> Don't like your Crazy Bones? Trade them away for the one you want!
-    Use the form below to find out who owns the Crazy Bone you want or see what Crazy Bones a user has, then propose a
+  <p> Don't like your Crazy Bones? Trade them away for the one you want! <a href="{% url 'trade-user' %}">View your current trades</a>
+    or use the form below to find out who owns the Crazy Bone you want or see what Crazy Bones a user has, then propose a new
     trade!</p>
   <form id="finder" method="get" action="{% url 'trade-result' %}">
     {{form}}

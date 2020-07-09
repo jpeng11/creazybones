@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from ..models import Crazybone, Profile
+from ..models import Crazybone, Profile, Cb_Profile
 from django.contrib.auth import login
 
 def signup(request):
@@ -15,7 +15,12 @@ def signup(request):
       new_profile = Profile.objects.create(user=user)
       for z in range(10):
         rand_cb = Crazybone.objects.order_by('?')[0]
-        new_profile.cb.add(rand_cb)
+        if(rand_cb in new_profile.cb.all()):
+          cb2P=Cb_Profile.objects.get(cb=rand_cb, profile=new_profile)
+          cb2P.qty+=1
+          cb2P.save()
+        else:
+          new_profile.cb.add(rand_cb)
       # This is how we log a user in via code
       login(request, user)
       return redirect('/')

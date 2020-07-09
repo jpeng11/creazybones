@@ -42,7 +42,7 @@
     </tr>
     <tr>
       <td class="td-1">Number of Crazybone You Own</td>
-      <td class="td-1">{{user_cb.count}}</td>
+      <td class="td-1">{{user_cb_qty}}</td>
     </tr>
     <tr>
       <td class="td-1">Join Date</td>
@@ -75,7 +75,9 @@
   {% for cb in all_cb %} {% if cb in user_cb %}
   <div class="grid-item">
     <a href="/crazybone/{{cb.id}}"><img src="{{cb.img}}" /></a>
-    <p>{{cb.name}}</p>
+    <p>{{cb.name}}
+        ({% for cbP in cb.cb_profile_set.all %}{% if cbP.profile == user.profile %}{{cbP.qty}}{% endif %}{% endfor %})
+    </p>
   </div>
   {% else %}
   <div class="grid-item">
