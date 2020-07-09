@@ -82,10 +82,12 @@ def result(req):
 @login_required
 def create(req):
     #create notification
+
     def_cb = req.POST['defender-cb'].split('-')
     defender = User.objects.get(username__iregex=f'^{def_cb[0]}$').profile
     defender_cb = Crazybone.objects.get(name=def_cb[1])
     challenger_cb = Crazybone.objects.get(name=req.POST['challenger_cb'])
+    # battle_noti = Notification.objects.create(notification_type='B', noti_from=)
     battle = Battle.objects.create(challenger=req.user.profile, defender=defender, challenger_cb=challenger_cb, defender_cb=defender_cb, turn='D')
     return redirect('battle_display', battle_id=battle.id)
 
