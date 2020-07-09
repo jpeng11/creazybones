@@ -1,3 +1,15 @@
+img.trade-arrrow {
+  width: 30px;
+}
+.feed-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.trade-half {
+  display: flex;
+  flex-direction: column;
+}
 @media only screen and (min-device-width: 768px) {
   /* Home.html Style */
   #aboutImg {
@@ -41,6 +53,10 @@
   .feed-li strong {
     font-size: 1.5rem;
   }
+  .trade-arrow {
+    width: 75px;
+  }
+  
 }
 
 @media only screen and (max-device-width: 767px) {
@@ -92,5 +108,8 @@
   }
   .feed-li strong {
     font-size: 1.5rem;
+  }
+  .trade-arrow {
+    width: 75px;
   }
 }

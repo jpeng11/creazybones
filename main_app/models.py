@@ -37,11 +37,8 @@ class Comment(models.Model):
         cb = Crazybone.objects.get(comment=self)
         return reverse('cb_detail', kwargs={'cb_id': cb.id})
 
-
-
-
     def __str__(self):
-        return f"{self.user_from} <-> {self.user_to} ... {self.cb_wanted} <-> {self.cb_offered}"
+        return f"{self.user} -> {self.cb}"
 
 
 class FriendList(models.Model):
