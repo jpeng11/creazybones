@@ -1,0 +1,6 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/stripe.css' %}" />
+{% endblock %} {% block content %}
+<h1>Your payment was cancelled</h1>
+<a href="{% url 'user_detail' user.id%}">Back</a>
+{%endblock%}
