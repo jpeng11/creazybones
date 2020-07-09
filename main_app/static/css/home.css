@@ -4,11 +4,16 @@ img.trade-arrrow {
 .feed-card {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 .trade-half {
   display: flex;
   flex-direction: column;
+  border: 1px solid #333;
+  margin: 5px;
+}
+.comment-h3 {
+  margin: 0;
 }
 @media only screen and (min-device-width: 768px) {
   /* Home.html Style */

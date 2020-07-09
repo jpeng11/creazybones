@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from datetime import datetime, timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 # Create your models here.
@@ -48,6 +48,26 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user} -> {self.cb}"
+    
+    def get_type(self):
+        return 'comment'
+
+    def time_passed(self):
+        time = datetime.now(timezone.utc) - self.date
+        if time.seconds <= 60:
+            return 'Less than a minute ago'
+        elif time.seconds >= 86400:
+            res = int(time.seconds /86400)
+            s = '' if res == 1 else 's'
+            return f'{res} day{s} ago'
+        elif time.seconds >= 3600:
+            res = int(time.seconds /3600)
+            s = '' if res == 1 else 's'
+            return f'{res} hour{s} ago'
+        else:
+            res = int(time.seconds /60)
+            s = '' if res == 1 else 's'
+            return f'{res} minute{s} ago'
 
 
 class FriendList(models.Model):
@@ -105,6 +125,25 @@ class TradeRequest(models.Model):
         choices=TRADE_STATUS,
         default='P'
     )
+    def get_type(self):
+        return 'trade'
+
+    def time_passed(self):
+        time = datetime.now(timezone.utc) - self.date
+        if time.seconds <= 60:
+            return 'Less than a minute ago'
+        elif time.seconds >= 86400:
+            res = int(time.seconds /86400)
+            s = '' if res == 1 else 's'
+            return f'{res} day{s} ago'
+        elif time.seconds >= 3600:
+            res = int(time.seconds /3600)
+            s = '' if res == 1 else 's'
+            return f'{res} hour{s} ago'
+        else:
+            res = int(time.seconds /60)
+            s = '' if res == 1 else 's'
+            return f'{res} minute{s} ago'
 
 class Clan(models.Model):
     name = models.CharField(max_length=100)
@@ -162,3 +201,26 @@ class Battle(models.Model):
     
     def __str__(self):
         return f"Battle: {self.id}"
+
+    def get_type(self):
+        return 'battle'
+
+    def time_passed(self):
+        time = datetime.now(timezone.utc) - self.date
+        if time.seconds <= 60:
+            return 'Less than a minute ago'
+            print('less than a minute')
+        elif time.days >= 1:
+            s = '' if time.days == 1 else 's'
+            print('more than a day')
+            return f'{time.days} day{s} ago'
+        elif time.seconds >= 3600:
+            res = int(time.seconds /3600)
+            s = '' if res == 1 else 's'
+            print('more than a hour')
+            return f'{res} hour{s} ago'
+        else:
+            print('else')
+            res = int(time.seconds /60)
+            s = '' if res == 1 else 's'
+            return f'{res} minute{s} ago'

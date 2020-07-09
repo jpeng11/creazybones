@@ -28,18 +28,16 @@ def home(request):
             user_to__in=friends).order_by('-date')[:10]
         comments = Comment.objects.filter(
             user__in=friends).order_by('-date')[:10]
-        # battles1 = Battle.objects.filter(challenger__in=friends).order_by('-date')[:10]
-        # battles2 = Battle.objects.filter(defender__in=friends).order_by('-date')[:10]
+        battles1 = Battle.objects.filter(challenger__in=friends).order_by('-date')[:10]
+        battles2 = Battle.objects.filter(defender__in=friends).order_by('-date')[:10]
         feed = sorted(
-            chain(comments, trades1, trades2),
+            chain(comments, trades1, trades2, battles1, battles2),
             key=attrgetter('date')
         )
         seen = set()
         new_feed = []
         for obj in feed:
             if obj.date not in seen:
-                obj.type = type(obj).__name__
-                print(obj.type)
                 new_feed.append(obj)
                 seen.add(obj.date)
 
