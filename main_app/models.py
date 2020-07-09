@@ -56,15 +56,18 @@ class Comment(models.Model):
         time = datetime.now(timezone.utc) - self.date
         if time.seconds <= 60:
             return 'Less than a minute ago'
-        elif time.seconds >= 86400:
-            res = int(time.seconds /86400)
-            s = '' if res == 1 else 's'
-            return f'{res} day{s} ago'
+            print('less than a minute')
+        elif time.days >= 1:
+            s = '' if time.days == 1 else 's'
+            print('more than a day')
+            return f'{time.days} day{s} ago'
         elif time.seconds >= 3600:
             res = int(time.seconds /3600)
             s = '' if res == 1 else 's'
+            print('more than a hour')
             return f'{res} hour{s} ago'
         else:
+            print('else')
             res = int(time.seconds /60)
             s = '' if res == 1 else 's'
             return f'{res} minute{s} ago'
