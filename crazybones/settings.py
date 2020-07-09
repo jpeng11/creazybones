@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -80,7 +80,7 @@ ABSOLUTE_URL_OVERRIDES = {'auth.user': lambda u: f"/profile/{u.id}"}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crazybones'
+        'NAME': 'crazybones',
     }
 }
 
