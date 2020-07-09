@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.urls import reverse
 # Create your models here.
@@ -156,7 +157,7 @@ class Battle(models.Model):
         Crazybone, related_name='challenger_cb', on_delete=models.CASCADE)
 
     accepted = models.BooleanField(default=False)
-
+    date = models.DateTimeField(default=datetime.now, blank=True)
     created_notification = models.OneToOneField(Notification, blank = True, null = True, on_delete=models.CASCADE)
     
     def __str__(self):
