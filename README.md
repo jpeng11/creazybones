@@ -13,7 +13,7 @@
 
 - [What is Crazy Bones](#what-is-crazy-bones)
 - [Getting Started](#getting-started)
-  - [Tech Stack](#tech-stack)
+- [Tech Stack We Used](#tech-stack-we-used)
 - [Development Documentation](#development-documentation)
 - [Core Team](#core-team)
 
@@ -21,7 +21,7 @@
 
 sccwer
 
-### Tech Stack We Used
+## Tech Stack We Used
 
 - Local
   - [Python](https://www.python.org/downloads/) 3.8
