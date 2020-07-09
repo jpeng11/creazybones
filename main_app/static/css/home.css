@@ -1,3 +1,20 @@
+img.trade-arrrow {
+  width: 30px;
+}
+.feed-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.trade-half {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  margin: 5px;
+}
+.comment-h3 {
+  margin: 0;
+}
 @media only screen and (min-device-width: 768px) {
   /* Home.html Style */
   #aboutImg {
@@ -41,6 +58,10 @@
   .feed-li strong {
     font-size: 1.5rem;
   }
+  .trade-arrow {
+    width: 75px;
+  }
+  
 }
 
 @media only screen and (max-device-width: 767px) {
@@ -92,5 +113,8 @@
   }
   .feed-li strong {
     font-size: 1.5rem;
+  }
+  .trade-arrow {
+    width: 75px;
   }
 }

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from ..models import Crazybone, Comment, Profile, Battle, Notification
+from ..models import Crazybone, Comment, Profile, Battle, Notification, Cb_Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -163,7 +163,12 @@ def move(req, battle_id):
 
         if last_turn == 'C':
             battle.challenger.cb.add(battle.defender_cb)
-            battle.defender.cb.remove(battle.defender_cb)
+            cb_removing = Cb_Profile.objects.get(profile=battle.defender, cb=battle.defender_cb)
+            if cb_removing.qty > 1:
+                cb_removing.qty -= 1
+                cb_removing.save()
+            else:
+                cb_removing.delete()
         else:
             battle.defender.cb.add(battle.challenger_cb)
             battle.challenger.cb.remove(battle.challenger_cb)
