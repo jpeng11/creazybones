@@ -15,7 +15,7 @@ class Crazybone(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cb = models.ManyToManyField(Crazybone)
+    cb = models.ManyToManyField(Crazybone, through='cb2Profile')
 
     def __str__(self):
         return f"{self.user}"
@@ -23,6 +23,11 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse("profile", kwargs={"user_id": self.id})
 
+class cb2Profile(models.Model):
+    qty = models.IntegerField(default=1)
+
+    cb = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
 class Comment(models.Model):
     text = models.TextField(max_length=300)
