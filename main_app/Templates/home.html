@@ -38,7 +38,7 @@
           {% for feed_item in feed %}
           <li class="feed-li">
             <div>
-              {% if type(feed_item).__name__ == 'TradeRequest' %}
+              {% if feed_item..type == 'TradeRequest' %}
               <h3>Trade!</h3>
               <div class="feed-card"><strong><a href="{% url 'user_detail' feed_item.user_from.user.id %}">{{ feed_item.user_from.user.username }}<a/></strong>
                 <a href="{% url 'cb_detail' feed_item.cb_offered.id %}">
@@ -64,10 +64,6 @@
                 <p>Status: Pending</p>
                 {% endif %}
                 {% else %}
-                <h3>Comment!</h3>
-                <h4><strong><a href="{% url 'user_detail' feed_item.user.user.id %}">{{ feed_item.user.user.username }}</a></strong> said {{ feed_item.text }} about <a
-                    href="{% url 'cb_detail' feed_item.cb.id %}">{{ feed_item.cb }}</a></h4>
-                <p>{{ feed_item.date }}</p>
                 {% endif %}
             </div>
           </li>
