@@ -53,8 +53,9 @@
             <button style="float: right;">REJECT</button>
           </form>
         </div>
-        {% elif notification.notification_type == 'T' %} {% elif notification.notification_type ==
-        'B' %}
+        {% elif notification.notification_type == 'T' %} 
+          <p>Hello World</p>
+        {% elif notification.notification_type == 'B' %}
         <div id="notiDiv">
           <p style="display: inline;">{{notification}}</p>
           <form
@@ -75,17 +76,7 @@
           </form>
         </div>
         {% else %}
-        <div id="notiDiv">
-          <p style="display: inline;">{{notification}}</p>
-          <form
-            method="post"
-            action="{% url 'battle_display' notification.notif_id %}"
-            style="display: inline;"
-          >
-            {% csrf_token %}
-            <button style="float: right;">BATTLE</button>
-          </form>
-        </div>
+        <h1>Hello World ooo</h1>
         {% endif %} {% empty %}
         <p>No notifcations to show..</p>
         {% endfor %}
