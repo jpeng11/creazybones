@@ -23,11 +23,14 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse("profile", kwargs={"user_id": self.id})
 
-class cb2Profile(models.Model):
+class Cb_Profile(models.Model):
     qty = models.IntegerField(default=1)
 
     cb = models.ForeignKey(Crazybone, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Hello {self.profile}'
 
 class Comment(models.Model):
     text = models.TextField(max_length=300)
