@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from ..seed import crazybones, users
-from ..models import Crazybone, Profile, FriendList, Comment, TradeRequest, Battle
+from ..models import Crazybone, Profile, FriendList, Comment, TradeRequest, Cb_Profile, Battle
 from django.contrib.auth.models import User
 from operator import attrgetter
 from itertools import chain
@@ -65,5 +65,10 @@ def seed(req):
         new_profile = Profile.objects.create(user=new_user)
         for z in range(10):
             rand_cb = Crazybone.objects.order_by('?')[0]
-            new_profile.cb.add(rand_cb)
+            if(rand_cb in new_profile.cb.all()):
+                cb2P=Cb_Profile.objects.get(cb=rand_cb, profile=new_profile)
+                cb2P.qty+=1
+                cb2P.save()
+            else:
+                new_profile.cb.add(rand_cb)
     return redirect('/')
