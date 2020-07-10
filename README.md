@@ -19,7 +19,39 @@
 
 ## Getting Started
 
-sccwer
+Following these instructions will allow you to run and build the project on your local machine for development and testing purposes.
+
+Create local PostgreSQL database:
+
+```bash
+CREATE DATABASE crazybones
+```
+
+Copy Django Secret Key from other Django or search Generate Django Secret Key on Google to `settings.py`
+
+Move to project folder and run following command to make to your models into your database schema:
+
+```bash
+python manage.py migrate
+```
+
+Install Stripe:
+
+```bash
+pip install stripe
+```
+
+Go to main_app/urls/urls.py and uncomment seed path
+
+```base
+#path('seed/', views.seed, name='seed'),
+```
+
+In your browser navigate to [http://127.0.0.1:8000/seed](http:127.0.0.1:800/seed) to seed all the crazybones into database
+
+Now you are good to go! Navigate to [http://127.0.0.1:8000/](http:127.0.0.1:800/), sign up and start playing
+
+<h3>Congrats!</h3>
 
 ## Tech Stack We Used
 
