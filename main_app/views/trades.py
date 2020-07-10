@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from main_app.models import Crazybone, TradeRequest, Profile, Cb_Profile
+from main_app.models import Crazybone, TradeRequest, Profile, Cb_Profile, Battle
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from main_app.forms import TradeSearchForm
@@ -12,13 +12,16 @@ def index(req):
 
 @login_required
 def result(req):
-
     user_crazybones = []
 
     for cbP in Cb_Profile.objects.filter(profile=req.user.profile):
-        for x in range(0, cbP.qty):
-            user_crazybones.append(cbP.cb.name)
-
+        if Battle.objects.filter(challenger=req.user.profile, challenger_cb = cbP.cb) and cbP.qty == 1:
+            user_crazybones.append(cbP.cb.name + " in battle")
+        elif Battle.objects.filter(defender=req.user.profile, defender_cb = cbP.cb) and cbP.qty == 1:
+            user_crazybones.append(cbP.cb.name + " in battle")
+        else:
+            for x in range(0, cbP.qty):
+                user_crazybones.append(cbP.cb.name)
 
     search_method = req.GET['search_method']
     search_query = req.GET['search_query'].strip()
@@ -41,11 +44,28 @@ def result(req):
             if(len(cbPs) != 0):
                 results = []
                 for cbP in cbPs:
-                    for x in range(0, cbP.qty):
+                    if Battle.objects.filter(challenger=cbP.profile, challenger_cb = cbP.cb) and cbP.qty == 1:
+                        print('true')
                         results.append({
                             "user": cbP.profile.user.username,
-                            "cb": crazybone.name
+                            "cb": crazybone.name,
+                            "battle":True
                         })
+                    elif Battle.objects.filter(defender=cbP.profile, defender_cb = cbP.cb) and cbP.qty == 1:
+                        print('true')
+                        results.append({
+                            "user": cbP.profile.user.username,
+                            "cb": crazybone.name,
+                            "battle":True
+                        })
+                    else:
+                        print('false')
+                        for x in range(0, cbP.qty):
+                            results.append({
+                                "user": cbP.profile.user.username,
+                                "cb": crazybone.name,
+                                "battle": False
+                            })
             else:
                 results = "No user has that Crazy Bone yet."
         except:
@@ -57,7 +77,8 @@ def result(req):
             profile = Profile.objects.get(id=user_id)
             results = [{
                 "user": profile.user.username,
-                "cb": crazybone.name
+                "cb": crazybone.name,
+                "battle": False
             }]
             radio_selected = True
         except:
@@ -68,11 +89,28 @@ def result(req):
             crazybones = User.objects.get(username__iexact=search_query).profile.cb.all()
             results = []
             for cbP in Cb_Profile.objects.filter(profile=user.profile):
-                for x in range(0, cbP.qty):
+                if Battle.objects.filter(challenger=cbP.profile, challenger_cb = cbP.cb) and cbP.qty == 1:
+                    print('true')
                     results.append({
                         "user": search_query,
-                        "cb": cbP.cb.name
+                        "cb": cbP.cb.name,
+                        "battle":True
                     })
+                elif Battle.objects.filter(defender=cbP.profile, defender_cb = cbP.cb) and cbP.qty == 1:
+                    print('true')
+                    results.append({
+                        "user": search_query,
+                        "cb": cbP.cb.name,
+                        "battle":True
+                     })
+                else:
+                    print('false')
+                    for x in range(0, cbP.qty):
+                        results.append({
+                            "user": search_query,
+                            "cb": cbP.cb.name,
+                            "battle": False
+                        })
         except:
             results = None
 
@@ -90,6 +128,11 @@ def create(req):
         new_user_to = User.objects.get(username__iexact=selected_values[0]).profile
         new_cb_offered = new_user_from.cb.get(name__iexact=req.POST['offered'])
         new_cb_wanted = new_user_to.cb.get(name__iexact=selected_values[1])
+        try:
+            battles_user_from = Battle.objects.filter(challenger= new_user_from, challenger_cb= new_cb_offered).get().union(Battle.objects.filter(defender= new_user_from, defender_cb= new_cb_offered).get())
+            battles_user_to = Battle.objects.filter(challenger=new_user_to, challenger_cb= new_cb_wanted).get().union(Battle.objects.filter(defender=new_user_to, defender_cb= new_cb_wanted).get())
+        except:
+            return redirect(req.META['HTTP_REFERER']+"&error=cbinbattle")
         new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered)
         return redirect('trade-user')
     except Exception as err:

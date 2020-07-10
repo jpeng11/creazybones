@@ -18,6 +18,7 @@
         <td>{{result.user}}</td>
         <td>{{result.cb}}</td>
         <td>
+          {% if result.battle == False %}
           <input
             type="radio"
             name="selected"
@@ -27,6 +28,9 @@
             {% endif %}
             required
           />
+          {% else %}
+          <p> This CrazyBone is Battling </p>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}
@@ -35,7 +39,7 @@
       <label for="offered">Select which Crazy Bone you would like to offer</label>
       <select id="offered" name="offered">
         {% for crazybone in user_crazybones%}
-        <option value="{{crazybone}}">
+        <option value="{{crazybone}}" {% if "in battle" in crazybone %}disabled{% endif %}>
           {{crazybone}}
         </option>
         {% endfor %}
@@ -44,6 +48,8 @@
     <input type="submit" value="Submit" />
     {% if error == "tradewithself" %}
     <p class="warning">You can't trade with yourself!</p>
+    {% elif error == "cbinbattle" %}
+    <p class="warning">One of the selected Crazy Bone is currently in battle! Try again later.</p>
     {% elif error != None %}
     <p class="warning">Something went wrong! Try Again or Contact the admin</p>
     {% endif %}
