@@ -30,7 +30,6 @@ def acceptrequest(req, pk, noti_type):
             this_noti = Notification.objects.filter(noti_to = req.user.profile)
             this_noti = this_noti.filter(notification_type = noti_type)
             this_noti = this_noti.get(noti_from = sent_from)
-            this_noti.delete() 
             return redirect('trade-user')
         except:
             return HttpResponse("Failed Request (Trade)")
@@ -52,6 +51,7 @@ def rejectrequest(req, pk, noti_type):
             this_noti = this_noti.get(noti_from = Profile.objects.get(user__id = pk))
             trade_request = TradeRequest.objects.get(created_notification = this_noti)
             trade_request.status = 'R'
+            trade_request.save()
             this_noti.delete()
             return redirect('notifications')
         except:

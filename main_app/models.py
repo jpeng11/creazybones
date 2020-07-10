@@ -126,7 +126,7 @@ class TradeRequest(models.Model):
         Crazybone, related_name='cb_offered', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, blank=True)
     created_notification = models.OneToOneField(
-        Notification, blank=True, null=True, on_delete=models.CASCADE)
+        Notification, blank=True, null=True, on_delete=models.SET_NULL)
     status = models.CharField(
         max_length=1,
         choices=TRADE_STATUS,

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from main_app.models import Crazybone, TradeRequest, Profile, Cb_Profile, Battle
+from main_app.models import Crazybone, TradeRequest, Profile, Cb_Profile, Battle, Notification
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from main_app.forms import TradeSearchForm
@@ -194,7 +194,8 @@ def create(req):
         new_user_to = User.objects.get(username__iexact=selected_values[0]).profile
         new_cb_offered = new_user_from.cb.get(name__iexact=req.POST['offered'])
         new_cb_wanted = new_user_to.cb.get(name__iexact=selected_values[1])
-        new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered)
+        new_notif = Notification.objects.create(notification_type="T", noti_from=new_user_from, noti_to=new_user_to)
+        new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered, created_notification=new_notif)
         return redirect('trade-user')
     except Exception as err:
         print(err)
@@ -228,10 +229,16 @@ def action(req, trade_id):
 
     # Once all the checks are done, we can start proceeding with the trade
     if req.POST['accept_trade'] == "Yes":
+        print("YES")
+
         # Crazybone Trading variables defined, user_to is defined above because we need to use it earlier
         trade_user_from = trade.user_from
         trade_cb_wanted = trade.cb_wanted
         trade_cb_offered = trade.cb_offered
+
+        trade.status = "A"
+        trade.save()
+        trade.created_notification.delete()
 
         # The user sending the request will lose the cb they offered, and the user receiving the request will lose the cb that is being requested.
         # First check if the relationship between cb and profile exist (At this point it should). If for some reason it doesn't we redirect and do nothing.
@@ -248,14 +255,16 @@ def action(req, trade_id):
                 # Purge trades since this cb is no longer available
                 # Removing received trades for User_from
                 user_from_received_trades = TradeRequest.objects.filter(user_to=trade_user_from, cb_wanted=trade_cb_offered, status="P")
-                for trade in user_from_received_trades:
-                    trade.status = "R"
-                    trade.save()
+                for trade_r in user_from_received_trades:
+                    trade_r.status = "R"
+                    trade_r.save()
+                    trade_r.created_notification.delete()
                 # Removing sent trades for User_from
                 user_from_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_from, cb_offered=trade_cb_offered, status="P"))
-                for trade in user_from_sent_trades:
-                    trade.status = "R"
-                    trade.save()
+                for trade_s in user_from_sent_trades:
+                    trade_s.status = "R"
+                    trade_s.save()
+                    trade_s.created_notification.delete()
 
             else:
                 cbP_user_from.qty -= 1
@@ -269,14 +278,16 @@ def action(req, trade_id):
                 if battle_num >= cbP_user_from.qty:
                     # Removing received trades for User_from
                     user_from_received_trades = TradeRequest.objects.filter(user_to=trade_user_from, cb_wanted=trade_cb_offered, status="P")
-                    for trade in user_from_received_trades:
-                        trade.status = "R"
-                        trade.save()
+                    for trade_r in user_from_received_trades:
+                        trade_r.status = "R"
+                        trade_r.save()
+                        trade_r.created_notification.delete()
                     # Removing sent trades for User_from
                     user_from_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_from, cb_offered=trade_cb_offered, status="P"))
-                    for trade in user_from_sent_trades:
-                        trade.status = "R"
-                        trade.save()
+                    for trade_s in user_from_sent_trades:
+                        trade_s.status = "R"
+                        trade_s.save()
+                        trade_s.created_notification.delete()
 
             #Remove cb_wanted or reduce qty for user_to
             if cbP_user_to.qty == 1:
@@ -285,14 +296,16 @@ def action(req, trade_id):
                 # Purge trades since this cb is no longer available
                 # Removing received trades for User_to
                 user_to_received_trades = TradeRequest.objects.filter(user_to=trade_user_to, cb_wanted=trade_cb_wanted, status="P")
-                for trade in user_to_received_trades:
-                    trade.status = "R"
-                    trade.save()
+                for trade_r in user_to_received_trades:
+                    trade_r.status = "R"
+                    trade_r.save()
+                    trade_r.created_notification.delete()
                 # Removing sent trades for User_to
                 user_to_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_to, cb_offered=trade_cb_wanted, status="P"))
-                for trade in user_to_sent_trades:
-                    trade.status = "R"
-                    trade.save()
+                for trade_s in user_to_sent_trades:
+                    trade_s.status = "R"
+                    trade_s.save()
+                    trade_s.created_notification.delete()
             
             else:
                 cbP_user_to.qty -= 1
@@ -305,14 +318,16 @@ def action(req, trade_id):
                 if battle_num >= cbP_user_to.qty:
                     # Removing received trades for User_to
                     user_to_received_trades = TradeRequest.objects.filter(user_to=trade_user_to, cb_wanted=trade_cb_wanted, status="P")
-                    for trade in user_to_received_trades:
-                        trade.status = "R"
-                        trade.save()
+                    for trade_r in user_to_received_trades:
+                        trade_r.status = "R"
+                        trade_r.save()
+                        trade_r.created_notification.delete()
                     # Removing sent trades for User_to
                     user_to_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_to, cb_offered=trade_cb_wanted, status="P"))
-                    for trade in user_to_sent_trades:
-                        trade.status = "R"
-                        trade.save()
+                    for trade_s in user_to_sent_trades:
+                        trade_s.status = "R"
+                        trade_s.save()
+                        trade_s.created_notification.delete()
 
         except:
             return redirect('trade-user')
@@ -332,12 +347,10 @@ def action(req, trade_id):
             cbP.save()
         except:
             trade_user_to.cb.add(trade_cb_offered)
-
-        trade.status = "A"
-        trade.save()
         
     elif req.POST['accept_trade'] == "No":
         trade.status = "R"
+        trade.created_notification.delete()
         trade.save()
     else:
         pass
