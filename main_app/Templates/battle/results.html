@@ -46,8 +46,8 @@
               >
               <select id="offered" name="challenger_cb">
                 {% for crazybone in user_crazybones%}
-                <option value="{{crazybone}}">
-                  {{crazybone.name}}
+                <option value="{{crazybone}}" {% if "in battle" in crazybone %}disabled{% endif %}>
+                  {{crazybone}}
                 </option>
                 {% endfor %}
               </select>
