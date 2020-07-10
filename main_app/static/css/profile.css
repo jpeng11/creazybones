@@ -69,3 +69,8 @@ p {
 #editBtn {
   margin: 0;
 }
+
+.profileImg {
+  width: 70px;
+  height: 70px;
+}
