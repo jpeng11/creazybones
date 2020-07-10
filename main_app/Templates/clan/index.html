@@ -1,19 +1,25 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/clan.css' %}" />
 {% endblock %} {% block content %}
-<h1>Clans</h1>
-<a href="{% url 'clan_create' %}">Create a new Clan</a>
-<div class="grid-container">
-  {% for clan in clans %}
-  <div class="grid-item">
-    <a href="{% url 'clan_detail' clan.id %}"><h2>{{ clan.name }}</h2></a>
-  </div>
-  {% empty %}
-<h3>There don't seem to be any clans...</h3>
-  
-{% endfor %}
+<table class="tb-1" style="background-color: #e7f4d2;">
+  <tbody>
+    <tr>
+      <td class="td-1">
+        <h1>Clans</h1>
+        <a href="{% url 'clan_create' %}">Create a new Clan</a>
+        <div class="grid-container">
+          {% for clan in clans %}
+          <div class="grid-item">
+            <a href="{% url 'clan_detail' clan.id %}"><h2>{{ clan.name }}</h2></a>
+          </div>
+          {% empty %}
+          <h3>There don't seem to be any clans...</h3>
 
-
-</div>
+          {% endfor %}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 {%endblock%}
