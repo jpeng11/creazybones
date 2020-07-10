@@ -2,21 +2,19 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
 <script src="https://js.stripe.com/v3/"></script>
 <script defer src="{% static 'javascript/stripe.js' %}"></script>
-{% endblock %} {% block content %} {% if not user_profile %}
+{% endblock %} {% block content %} 
 
+{% if not user_profile %}
 <h1>User not exists</h1>
 
-
 {%else%}
-
 <div class="header">
-
-
-<h1>{% for photo in user.profile.photo_set.all %}
+{% for photo in user.profile.photo_set.all %}
       <img class="profileImg" src="{{photo.url}}">
     {% empty %}
-      <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-    {% endfor %}<span>{{ user_profile.username }}</span></h1>
+      <img class="profileImg" src="{%static 'img/profile.png'%}">
+    {% endfor %}
+<h1 id="nameH1"><span>{{ user_profile.username }}</span></h1>
 </div>
 
 {% if user_profile.id == current_user.id %}
@@ -73,7 +71,7 @@
 
 <div>
   <h1 class="neon">Do you want more crazybone?</h1>
-  <h2>Purchase 10 packs of Crazy Bone loot bags</h2>
+  <h2>Purchase 10 packs of Crazy Bone</h2>
   <button id="submitBtn" class="btn btn--promo">YES!TAKE MY MONEY!!!</button>
 </div>
 <hr />
@@ -125,7 +123,7 @@
   </tbody>
 </table>
 {%endif%}
-<h3>You have no trade request on the moments</h3>
+<h3>You have no trade request at the moments</h3>
 {%endif%}
 
 {% if not user.profile.photo_set.count%}
