@@ -16,19 +16,8 @@ def battle(req):
 
 @login_required
 def result(req):
-    user_crazybones = []
 
-    for cbP in Cb_Profile.objects.filter(profile=req.user.profile):
-        numOfBattles = Battle.objects.filter(challenger=req.user.profile, challenger_cb = cbP.cb).count() + Battle.objects.filter(defender=req.user.profile, defender_cb = cbP.cb).count()
-        print(numOfBattles)
-        if Battle.objects.filter(challenger=req.user.profile, challenger_cb = cbP.cb) and cbP.qty == 1:
-            user_crazybones.append(cbP.cb.name + " in battle")
-        elif Battle.objects.filter(defender=req.user.profile, defender_cb = cbP.cb) and cbP.qty == 1:
-            user_crazybones.append(cbP.cb.name + " in battle")
-        else:
-            for x in range(0, cbP.qty):
-                user_crazybones.append(cbP.cb.name)
-
+    user_crazybones = req.user.profile.cb.all()
     if len(user_crazybones) <= 0:
         form = BattleSearchForm(req.GET)
         return render(req, 'battle/index.html', {'form': form, 'error': 'You have no crazybones to battle with'})
@@ -213,10 +202,10 @@ def move(req, battle_id):
                 cb_removing.save()
             else:
                 cb_removing.delete()
-
-            this.noti_from = battle.challenger
+            
+            this_noti.noti_from = battle.challenger
             this_noti.noti_to = battle.defender
-            this_noti.save()   
+            this_noti.save()
         else:
             # Defender wins the CB of the challenger - Check if the relationship exist first, if it does, add to qty, otherwise add CB directly.
             try:
@@ -233,7 +222,7 @@ def move(req, battle_id):
                 cb_removing.save()
             else:
                 cb_removing.delete()
-            
+                
             this_noti.noti_from = battle.defender
             this_noti.noti_to = battle.challenger
             this_noti.save()
