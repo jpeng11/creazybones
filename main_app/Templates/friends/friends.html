@@ -38,7 +38,7 @@
           <p style="display: inline;">{{match}}</p>
           <form method="post" action="{% url 'addfriend' pk=match.user.id %}" style="display: inline;">
             {% csrf_token %}
-            <button style="float: right;">ADD FRIEND {{match.user.id}}</button>
+            <button style="float: right;">ADD FRIEND</button>
           </form>
         </div>
         {% endfor %} {% endif %}

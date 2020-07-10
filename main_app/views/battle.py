@@ -187,14 +187,42 @@ def move(req, battle_id):
         battle.save()
 
         if last_turn == 'C':
-            battle.challenger.cb.add(battle.defender_cb)
-            battle.defender.cb.remove(battle.defender_cb)
+            # Challenger wins the CB of defender - Check if the relationship exist first, if it does, add to qty, otherwise add CB directly.
+            try:
+                cbP_adding = Cb_Profile.objects.get(profile=battle.challenger, cb=battle.defender_cb)
+                cbP_adding.qty += 1
+                cbP_adding.save()
+            except:
+                battle.challenger.cb.add(battle.defender_cb)
+
+            # Defender loses their CB. If the quantiy is higher than 1, just subtract 1, otherwise remove the CB from the defender.
+            cb_removing = Cb_Profile.objects.get(profile=battle.defender, cb=battle.defender_cb)
+            if cb_removing.qty > 1:
+                cb_removing.qty -= 1
+                cb_removing.save()
+            else:
+                cb_removing.delete()
+            
             this_noti.noti_from = battle.challenger
             this_noti.noti_to = battle.defender
             this_noti.save()
         else:
-            battle.defender.cb.add(battle.challenger_cb)
-            battle.challenger.cb.remove(battle.challenger_cb)
+            # Defender wins the CB of the challenger - Check if the relationship exist first, if it does, add to qty, otherwise add CB directly.
+            try:
+                cbP_adding = Cb_Profile.objects.get(profile=battle.defender, cb=battle.challenger_cb)
+                cbP_adding.qty += 1
+                cbP_adding.save()
+            except:
+                battle.defender.cb.add(battle.challenger_cb)
+            
+            # Challenger loses their CB. If the quantiy is higher than 1, just subtract 1, otherwise remove the CB from the defender.
+            cb_removing = Cb_Profile.objects.get(profile=battle.challenger, cb=battle.challenger_cb)
+            if cb_removing.qty > 1:
+                cb_removing.qty -= 1
+                cb_removing.save()
+            else:
+                cb_removing.delete()
+                
             this_noti.noti_from = battle.defender
             this_noti.noti_to = battle.challenger
             this_noti.save()

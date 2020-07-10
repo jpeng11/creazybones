@@ -1,5 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+<style>
+  #notiDiv {
+    margin-top: 5px;
+  }
+</style>
 {% endblock %} {% block content %}
 
 <table class="tb-1" style="background-color: #e7f4d2;">
@@ -11,51 +16,62 @@
           <span style="color: black; text-shadow: 2px 2px gray;">NOTIFICATIONS</span>
         </h1>
 
-
-        {% for notification in my_notif %}
-        {% if notification.notification_type == 'F' or notification.notification_type == 'T' %}
-        <div id="notiDiv">
-          <p style="display: inline;">{{notification}}</p>
-          <form method="post"
-            action="{% url 'accept' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
-            style="display: inline;">
-            {% csrf_token %}
-            <button style="float: right;">ACCEPT {{notification.noti_from.user.id}}</button>
-          </form>
-          <form method="post"
-            action="{% url 'reject' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
-            style="display: inline;">
-            {% csrf_token %}
-            <button style="float: right;">REJECT</button>
-          </form>
-        </div>
-        {% elif notification.notification_type == 'B' %}
-        <div id="notiDiv">
-          <p style="display: inline;">{{notification}}</p>
-          <form method="post"
-            action="{% url 'battle_accept' pk=notification.noti_from.user.id noti_type=notification.notification_type%}"
-            style="display: inline;">
-            {% csrf_token %}
-            <button style="float: right;">ACCEPT</button>
-          </form>
-          <form method="post"
-            action="{% url 'battle_reject' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
-            style="display: inline;">
-            {% csrf_token %}
-            <button style="float: right;">REJECT</button>
-          </form>
-        </div>
-        {% else %}
-        <div id="notiDiv">
-          <p style="display: inline;">{{notification}}</p>
-          <form method="post" action="{% url 'battle_notification' notif_id=notification.id %}"
-            style="display: inline;">
-            {% csrf_token %}
-            <button style="float: right;">BATTLE</button>
-          </form>
-        </div>
-        {% endif %} {% empty %}
-        <p>No notifcations to show..</p>
+        {% for notification in my_notif %} 
+          {% if notification.notification_type == 'F' or notification.notification_type == 'T' %}
+            <div id="notiDiv" >
+              <p style="display: inline;">{{notification}}</p>
+              <form
+                method="post"
+                action="{% url 'accept' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
+                style="display: inline;"
+              >
+                {% csrf_token %}
+                <button style="float: right;">ACCEPT {{notification.noti_from.user.id}}</button>
+              </form>
+              <form
+                method="post"
+                action="{% url 'reject' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
+                style="display: inline;"
+              >
+                {% csrf_token %}
+                <button style="float: right;">REJECT</button>
+              </form>
+            </div>
+          {% elif notification.notification_type == 'B' %}
+            <div id="notiDiv">
+              <p style="display: inline;">{{notification}}</p>
+              <form
+                method="post"
+                action="{% url 'battle_accept' pk=notification.noti_from.user.id noti_type=notification.notification_type%}"
+                style="display: inline;"
+              >
+                {% csrf_token %}
+                <button style="float: right;">ACCEPT</button>
+              </form>
+              <form
+                method="post"
+                action="{% url 'battle_reject' pk=notification.noti_from.user.id noti_type=notification.notification_type %}"
+                style="display: inline;"
+              >
+                {% csrf_token %}
+                <button style="float: right;">REJECT</button>
+              </form>
+            </div>
+          {% else %}
+            <div id="notiDiv">
+              <p style="display: inline;">{{notification}}</p>
+              <form
+                method="post"
+                action="{% url 'battle_notification' notif_id=notification.id %}"
+                style="display: inline;"
+              >
+                {% csrf_token %}
+                <button style="float: right;">BATTLE</button>
+              </form>
+            </div>
+          {% endif %} 
+        {% empty %}
+          <p>No notifcations to show..</p>
         {% endfor %}
       </td>
     </tr>

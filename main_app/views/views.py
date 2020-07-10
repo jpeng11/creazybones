@@ -40,6 +40,8 @@ def home(request):
             if obj.date not in seen:
                 new_feed.append(obj)
                 seen.add(obj.date)
+                print(obj.date, obj.get_type())
+        
 
         return render(request, 'home.html', {'cbs': crazybones, 'feed': reversed(new_feed[:15])})
     print('feed: ', feed)

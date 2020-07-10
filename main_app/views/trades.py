@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from main_app.models import Crazybone, TradeRequest, Profile, Cb_Profile
+from main_app.models import Crazybone, TradeRequest, Profile, Cb_Profile, Battle, Notification
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from main_app.forms import TradeSearchForm
@@ -12,13 +12,35 @@ def index(req):
 
 @login_required
 def result(req):
-
     user_crazybones = []
 
     for cbP in Cb_Profile.objects.filter(profile=req.user.profile):
+        def_battles = Battle.objects.filter(challenger=req.user.profile, challenger_cb=cbP.cb).count()
+        cha_battles = Battle.objects.filter(defender=req.user.profile, defender_cb=cbP.cb).count()
+        battle_num = def_battles + cha_battles
+        print(battle_num)
         for x in range(0, cbP.qty):
-            user_crazybones.append(cbP.cb.name)
-
+            if x<battle_num:
+                if cbP.qty == 1:
+                    user_crazybones.append({
+                        "value": cbP.cb.name,
+                        "name": f"{cbP.cb.name} is in a battle"
+                    })
+                else:
+                    user_crazybones.append({
+                        "value": cbP.cb.name,
+                        "name": f"{cbP.cb.name} ({x+1}) is in a battle"
+                    })
+            elif cbP.qty == 1:
+                user_crazybones.append({
+                    "value": cbP.cb.name,
+                    "name": f"{cbP.cb.name}"
+                })
+            else:
+                user_crazybones.append({
+                    "value": cbP.cb.name,
+                    "name": f"{cbP.cb.name} ({x+1})"
+                })
 
     search_method = req.GET['search_method']
     search_query = req.GET['search_query'].strip()
@@ -41,26 +63,82 @@ def result(req):
             if(len(cbPs) != 0):
                 results = []
                 for cbP in cbPs:
+                    def_battles = Battle.objects.filter(challenger=cbP.profile, challenger_cb=cbP.cb).count()
+                    cha_battles = Battle.objects.filter(defender=cbP.profile, defender_cb=cbP.cb).count()
+                    battle_num = def_battles + cha_battles
                     for x in range(0, cbP.qty):
-                        results.append({
-                            "user": cbP.profile.user.username,
-                            "cb": crazybone.name
-                        })
+                        if x<battle_num:
+                            if cbP.qty == 1:
+                                results.append({
+                                    "user": cbP.profile.user.username,
+                                    "cb": crazybone.name,
+                                    "battle": True
+                                })
+                            else:
+                                results.append({
+                                    "user": cbP.profile.user.username,
+                                    "cb": crazybone.name,
+                                    "num": f"{x+1}",
+                                    "battle": True
+                                })
+                        elif cbP.qty == 1:
+                            results.append({
+                                "user": cbP.profile.user.username,
+                                "cb": crazybone.name,
+                                "battle": False
+                            })
+                        else:
+                            results.append({
+                                "user": cbP.profile.user.username,
+                                "cb": crazybone.name,
+                                "num": f"{x+1}",
+                                "battle": False
+                            })
             else:
                 results = "No user has that Crazy Bone yet."
-        except:
+        except Exception as err:
             results = None
     elif search_method == 'direct':
         try:
             user_id = req.GET['user_id']
             crazybone = Crazybone.objects.get(id=search_query)
             profile = Profile.objects.get(id=user_id)
-            results = [{
-                "user": profile.user.username,
-                "cb": crazybone.name
-            }]
+            cbP = Cb_Profile.objects.get(profile=profile, cb=crazybone)
+            def_battles = Battle.objects.filter(challenger=cbP.profile, challenger_cb = cbP.cb).count()
+            cha_battles = Battle.objects.filter(defender=cbP.profile, defender_cb = cbP.cb).count()
+            battle_num = def_battles + cha_battles
+            results = []
+            for x in range(0, cbP.qty):
+                if x<battle_num:
+                    if cbP.qty == 1:
+                        results.append({
+                            "user": profile.user.username,
+                            "cb": crazybone.name,
+                            "battle": True
+                        })
+                    else:
+                        results.append({
+                            "user": profile.user.username,
+                            "cb": crazybone.name,
+                            "num": f"{x+1}",
+                            "battle": False
+                        })
+                elif cbP.qty == 1:
+                    results.append({
+                        "user": profile.user.username,
+                        "cb": crazybone.name,
+                        "battle": False
+                    })
+                else:
+                    results.append({
+                        "user": profile.user.username,
+                        "cb": crazybone.name,
+                        "num": f"{x+1}",
+                        "battle": False
+                    })
             radio_selected = True
-        except:
+        except Exception as err:
+            print(err)
             results = None
     else:
         try:
@@ -68,11 +146,37 @@ def result(req):
             crazybones = User.objects.get(username__iexact=search_query).profile.cb.all()
             results = []
             for cbP in Cb_Profile.objects.filter(profile=user.profile):
+                def_battles = Battle.objects.filter(challenger=cbP.profile, challenger_cb = cbP.cb).count()
+                cha_battles = Battle.objects.filter(defender=cbP.profile, defender_cb = cbP.cb).count()
+                battle_num = def_battles + cha_battles
                 for x in range(0, cbP.qty):
-                    results.append({
-                        "user": search_query,
-                        "cb": cbP.cb.name
-                    })
+                    if x<battle_num:
+                        if cbP.qty == 1:
+                            results.append({
+                                "user": search_query,
+                                "cb": cbP.cb.name,
+                                "battle": True
+                            })
+                        else:
+                            results.append({
+                                "user": search_query,
+                                "cb": cbP.cb.name,
+                                "num": f"{x+1}",
+                                "battle": True
+                            })
+                    elif cbP.qty == 1:
+                        results.append({
+                            "user": search_query,
+                            "cb": cbP.cb.name,
+                            "battle": False
+                        })
+                    else:
+                        results.append({
+                            "user": search_query,
+                            "cb": cbP.cb.name,
+                            "num": f"{x+1}",
+                            "battle": False
+                        })
         except:
             results = None
 
@@ -90,7 +194,8 @@ def create(req):
         new_user_to = User.objects.get(username__iexact=selected_values[0]).profile
         new_cb_offered = new_user_from.cb.get(name__iexact=req.POST['offered'])
         new_cb_wanted = new_user_to.cb.get(name__iexact=selected_values[1])
-        new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered)
+        new_notif = Notification.objects.create(notification_type="T", noti_from=new_user_from, noti_to=new_user_to)
+        new_trade = TradeRequest.objects.create(user_from=new_user_from, user_to=new_user_to, cb_wanted=new_cb_wanted, cb_offered=new_cb_offered, created_notification=new_notif)
         return redirect('trade-user')
     except Exception as err:
         print(err)
@@ -124,10 +229,16 @@ def action(req, trade_id):
 
     # Once all the checks are done, we can start proceeding with the trade
     if req.POST['accept_trade'] == "Yes":
+        print("YES")
+
         # Crazybone Trading variables defined, user_to is defined above because we need to use it earlier
         trade_user_from = trade.user_from
         trade_cb_wanted = trade.cb_wanted
         trade_cb_offered = trade.cb_offered
+
+        trade.status = "A"
+        trade.save()
+        trade.created_notification.delete()
 
         # The user sending the request will lose the cb they offered, and the user receiving the request will lose the cb that is being requested.
         # First check if the relationship between cb and profile exist (At this point it should). If for some reason it doesn't we redirect and do nothing.
@@ -140,16 +251,83 @@ def action(req, trade_id):
             #Remove cb_offered or reduce qty for user_from
             if cbP_user_from.qty == 1:
                 trade_user_from.cb.remove(trade_cb_offered)
+
+                # Purge trades since this cb is no longer available
+                # Removing received trades for User_from
+                user_from_received_trades = TradeRequest.objects.filter(user_to=trade_user_from, cb_wanted=trade_cb_offered, status="P")
+                for trade_r in user_from_received_trades:
+                    trade_r.status = "R"
+                    trade_r.save()
+                    trade_r.created_notification.delete()
+                # Removing sent trades for User_from
+                user_from_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_from, cb_offered=trade_cb_offered, status="P"))
+                for trade_s in user_from_sent_trades:
+                    trade_s.status = "R"
+                    trade_s.save()
+                    trade_s.created_notification.delete()
+
             else:
                 cbP_user_from.qty -= 1
                 cbP_user_from.save()
 
+                # Removing user_from trades IF all their crazy bones are battling
+                def_battles = Battle.objects.filter(challenger=trade_user_from, challenger_cb=trade_cb_offered).count()
+                cha_battles = Battle.objects.filter(defender=trade_user_from, defender_cb=trade_cb_offered).count()
+                battle_num = def_battles + cha_battles
+
+                if battle_num >= cbP_user_from.qty:
+                    # Removing received trades for User_from
+                    user_from_received_trades = TradeRequest.objects.filter(user_to=trade_user_from, cb_wanted=trade_cb_offered, status="P")
+                    for trade_r in user_from_received_trades:
+                        trade_r.status = "R"
+                        trade_r.save()
+                        trade_r.created_notification.delete()
+                    # Removing sent trades for User_from
+                    user_from_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_from, cb_offered=trade_cb_offered, status="P"))
+                    for trade_s in user_from_sent_trades:
+                        trade_s.status = "R"
+                        trade_s.save()
+                        trade_s.created_notification.delete()
+
             #Remove cb_wanted or reduce qty for user_to
             if cbP_user_to.qty == 1:
                 trade_user_to.cb.remove(trade_cb_wanted)
+
+                # Purge trades since this cb is no longer available
+                # Removing received trades for User_to
+                user_to_received_trades = TradeRequest.objects.filter(user_to=trade_user_to, cb_wanted=trade_cb_wanted, status="P")
+                for trade_r in user_to_received_trades:
+                    trade_r.status = "R"
+                    trade_r.save()
+                    trade_r.created_notification.delete()
+                # Removing sent trades for User_to
+                user_to_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_to, cb_offered=trade_cb_wanted, status="P"))
+                for trade_s in user_to_sent_trades:
+                    trade_s.status = "R"
+                    trade_s.save()
+                    trade_s.created_notification.delete()
+            
             else:
                 cbP_user_to.qty -= 1
                 cbP_user_to.save()
+
+                # Removing user_to trades IF all their crazy bones are battling
+                def_battles = Battle.objects.filter(challenger=trade_user_to, challenger_cb=trade_cb_wanted).count()
+                cha_battles = Battle.objects.filter(defender=trade_user_to, defender_cb=trade_cb_wanted).count()
+                battle_num = def_battles + cha_battles
+                if battle_num >= cbP_user_to.qty:
+                    # Removing received trades for User_to
+                    user_to_received_trades = TradeRequest.objects.filter(user_to=trade_user_to, cb_wanted=trade_cb_wanted, status="P")
+                    for trade_r in user_to_received_trades:
+                        trade_r.status = "R"
+                        trade_r.save()
+                        trade_r.created_notification.delete()
+                    # Removing sent trades for User_to
+                    user_to_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_to, cb_offered=trade_cb_wanted, status="P"))
+                    for trade_s in user_to_sent_trades:
+                        trade_s.status = "R"
+                        trade_s.save()
+                        trade_s.created_notification.delete()
 
         except:
             return redirect('trade-user')
@@ -169,44 +347,10 @@ def action(req, trade_id):
             cbP.save()
         except:
             trade_user_to.cb.add(trade_cb_offered)
-
-        trade.status = "A"
-        trade.save()
-        print(trade.status)
-
-        # Trade Request PURGE - An accepted trade may render other trades impossible as a person may trade away a crazybone crucial to that trade.
-        # Therefore, we need to remove any trades that are now impossible due to the accepted trade.
-
-        # Removing received trades for User_from
-        user_from_received_trades = TradeRequest.objects.filter(user_to=trade_user_from, cb_wanted=trade_cb_offered, status="P")
-        for trade in user_from_received_trades:
-            if trade.cb_wanted not in trade_user_from.cb.all():
-                trade.status = "R"
-                trade.save()
-
-        # Removing sent trades for User_from
-        user_from_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_from, cb_offered=trade_cb_offered, status="P"))
-        for trade in user_from_sent_trades:
-            if trade.cb_offered not in trade_user_from.cb.all():
-                trade.status = "R"
-                trade.save()
-
-        # Removing received trades for User_to
-        user_to_received_trades = TradeRequest.objects.filter(user_to=trade_user_to, cb_wanted=trade_cb_wanted, status="P")
-        for trade in user_to_received_trades:
-            if trade.cb_wanted not in trade_user_to.cb.all():
-                trade.status = "R"
-                trade.save()
-
-        # Removing sent trades for User_to
-        user_to_sent_trades = (TradeRequest.objects.filter(user_from=trade_user_to, cb_offered=trade_cb_wanted, status="P"))
-        for trade in user_to_sent_trades:
-            if trade.cb_offered not in trade_user_to.cb.all():
-                trade.status = "R"
-                trade.save()
         
     elif req.POST['accept_trade'] == "No":
         trade.status = "R"
+        trade.created_notification.delete()
         trade.save()
     else:
         pass
