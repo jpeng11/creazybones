@@ -2,45 +2,41 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
 {% endblock %} {% block content %}
 
-<table class="tb-1" style="background-color: pink;">
+<table class="tb-1" style="background-color: #e7f4d2;">
   <tbody>
     <tr>
       <td class="td-1">
         <h1 style="text-align: center;">
-          <span style="color: purple; padding: 20px; text-shadow: 2px 2px cornflowerblue;"
-            >FRIENDS</span
-          >
-          <span style="color: royalblue; text-shadow: 2px 2px white;">LIST</span>
+          <span style="color: black; padding: 20px; text-shadow: 2px 2px gray;">FRIENDS</span>
+          <span style="color: black; text-shadow: 2px 2px gray;">LIST</span>
         </h1>
 
         {% if friends %} {% for friend in friends%} {% if friend.user.user != user %}
-        <p><a href="{% url 'user_detail' friend.user.user.id %}">{{friend.user.user}}</a></p>
+        <p style="text-align: center;"><a href="{% url 'user_detail' friend.user.user.id %}">{{friend.user.user}}</a>
+        </p>
         {% else %}
-        <p><a href="{% url 'user_detail' friend.user.user.id %}">{{friend.myId.user}}</a></p>
+        <p style="text-align: center;"><a href="{% url 'user_detail' friend.user.user.id %}">{{friend.myId.user}}</a>
+        </p>
         {% endif %} {% endfor %} {% else %}
-        <p>No friends yet :(</p>
+        <p style="text-align: center;">No friends yet :(</p>
         {% endif %}
       </td>
     </tr>
   </tbody>
 </table>
 
-<table class="tb-1" style="background-color: rgb(231, 209, 84);">
+<table class="tb-1" style="background-color: #e7f4d2;">
   <tbody>
     <tr>
       <td class="td-1">
         <h1 style="text-align: center;">
-          <span style="color: white; padding: 20px; text-shadow: 2px 2px black;">SEARCH</span>
-          <span style="color: white; text-shadow: 2px 2px black;">USERS</span>
+          <span style="color: black; padding: 20px; text-shadow: 2px 2px gray;">SEARCH</span>
+          <span style="color: black; text-shadow: 2px 2px gray;">USERS</span>
         </h1>
         {% if searched_users != 'admin' %} {% for match in searched_users %}
         <div id="searchDiv">
           <p style="display: inline;">{{match}}</p>
-          <form
-            method="post"
-            action="{% url 'addfriend' pk=match.user.id %}"
-            style="display: inline;"
-          >
+          <form method="post" action="{% url 'addfriend' pk=match.user.id %}" style="display: inline;">
             {% csrf_token %}
             <button style="float: right;">ADD FRIEND {{match.user.id}}</button>
           </form>

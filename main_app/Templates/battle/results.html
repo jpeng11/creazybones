@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}" />
 {% endblock %} {% block content %}
 <div id="trade-container">
   <h1>Battle your Friends</h1>
@@ -18,20 +18,12 @@
         <td>{{result.user}}</td>
         <td>{{result.cb}}</td>
         <td>
-          <input
-            type="radio"
-            name="defender-cb"
-            value="{{result.user}}-{{result.cb}}"
-            {%
+          <input type="radio" name="defender-cb" value="{{result.user}}-{{result.cb}}" {%
             if
             radio_selected
-            %}
-            checked
-            {%
+            %} checked {%
             endif
-            %}
-            required
-          />
+            %} required />
         </td>
       </tr>
       {% endfor %}
