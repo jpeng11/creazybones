@@ -73,4 +73,9 @@ p {
 .profileImg {
   width: 70px;
   height: 70px;
+  margin-top: 20px;
+}
+
+#nameH1 {
+  margin-top: 0;
 }
