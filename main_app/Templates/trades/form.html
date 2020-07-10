@@ -7,14 +7,20 @@
 {% endblock %}
 
 {% block content %}
-<div id="trade-container">
-  <h1> Trade your Crazy Bones</h1>
-  <p> Don't like your Crazy Bones? Trade them away for the one you want! <a href="{% url 'trade-user' %}">View your current trades</a>
-    or use the form below to find out who owns the Crazy Bone you want or see what Crazy Bones a user has, then propose a new
-    trade!</p>
-  <form id="finder" method="get" action="{% url 'trade-result' %}">
-    {{form}}
-    <input type="submit" name="submit" value="Submit">{% if error %}<p class="warning">You can't trade with yourself!</p>{% endif %}
-  </form>
+
+<div id="outer-container" style="border-style: outset; border-spacing: 2px; border-color: grey;">
+  <div id="trade-container" style="border-style: ridge;">
+    <h1> Trade your Crazy Bones</h1>
+    <p> Don't like your Crazy Bones? Trade them away for the one you want! <a href="{% url 'trade-user' %}">View
+        your current trades</a>
+      or use the form below to find out who owns the Crazy Bone you want or see what Crazy Bones a user has, then
+      propose a new
+      trade!</p>
+    <form id="finder" method="get" action="{% url 'trade-result' %}">
+      {{form}}
+      <input type="submit" name="submit" value="Submit">{% if error %}<p class="warning">You can't trade with
+        yourself!</p>{% endif %}
+    </form>
+  </div>
 </div>
 {% endblock %}

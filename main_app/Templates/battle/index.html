@@ -1,18 +1,21 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
 {% endblock %} {% block content %}
-<div id="trade-container">
-  <h1>Battle your Friends</h1>
-  <p>
-    Don't like your Crazy Bones? Battle your friends to claim theirs! Use the form below to find out
-    who owns the Crazy Bone you want or see what Crazy Bones a user has, then challenge them! <br />
-    WINNER TAKE ALL
-  </p>
-  <form id="finder" method="get" action="{% url 'battle_req_result' %}">
-    {{form}}
-    <input type="submit" name="submit" value="Submit" />{% if error %}
-    <p class="warning">{{ error }}</p>
-    {% endif %}
-  </form>
+
+<div id="outer-container" style="border-style: outset; border-spacing: 2px; border-color: grey;">
+  <div id="trade-container" style="border-style: ridge; padding: 5px">
+    <h1>Battle your Friends</h1>
+    <p>
+      Don't like your Crazy Bones? Battle your friends to claim theirs! Use the form below to find out
+      who owns the Crazy Bone you want or see what Crazy Bones a user has, then challenge them! <br />
+      WINNER TAKE ALL
+    </p>
+    <form id="finder" method="get" action="{% url 'battle_req_result' %}">
+      {{form}}
+      <input type="submit" name="submit" value="Submit" />{% if error %}
+      <p class="warning">{{ error }}</p>
+      {% endif %}
+    </form>
+  </div>
 </div>
 {% endblock %}
