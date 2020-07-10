@@ -5,7 +5,14 @@
 {% endblock %} {% block content %} {% if not user_profile %}
 <h1>User not exists</h1>
 {%else%}
-<h1>{{ user_profile.username }}</h1>
+<h1>
+  {{ user_profile.username }}{% if user_profile.id == current_user.id %}
+  <button id="editBtn">
+    <a href="{% url 'user_update' user_profile.id %}">EDIT</a>
+  </button>
+  {%endif%}
+</h1>
+
 <table class="tb-1">
   <tbody>
     <tr>
@@ -48,16 +55,6 @@
       <td class="td-1">Join Date</td>
       <td class="td-1">{{user_profile.date_joined}}</td>
     </tr>
-    {% if user_profile.id == current_user.id %}
-    <tr>
-      <td class="td-1"></td>
-      <td class="td-1">
-        <button>
-          <a href="{% url 'user_update' user_profile.id %}">EDIT</a>
-        </button>
-      </td>
-    </tr>
-    {%endif%}
   </tbody>
 </table>
 
@@ -89,5 +86,32 @@
   </div>
   {% endif %} {% endfor %} {%endif%}
 </div>
+{% if user_profile.id == current_user.id %}
+<hr />
+<h1>Trades</h1>
 
+{% if trade%}
+<table class="tb-1">
+  <tbody>
+  <tr>
+    <th class="td-1">Trade id</th>
+    <th class="td-1">Trade from</th>
+    <th class="td-1">Trade to</th>
+    <th class="td-1">CB offered</th>
+    <th class="td-1">CB wanted</th>
+    <th class="td-1">Date</th>
+  </tr>
+    {% for t in trade%}
+    <tr>
+      <td class="td-1"><button><a href="{% url 'trade-action' t.id%}">{{t.id}}</a></button></td>
+      <td class="td-1">{{t.user_from}}</td>
+      <td class="td-1">{{t.user_to}}</td>
+      <td class="td-1">{{t.cb_offered}}</td>
+      <td class="td-1">{{t.cb_wanted}}</td>
+      <td class="td-1">{{t.date}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%endif%}{%endif%}
 {% endblock %}

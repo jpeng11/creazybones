@@ -133,7 +133,4 @@ django_heroku.settings(locals())
 STRIPE_PUBLISHABLE_KEY = os.environ['STRIPE_PUBLISHABLE_KEY']
 STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
 
-COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
-STATIC_ROOT = os.path.join(BASE_DIR, 'main_app/static')
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
