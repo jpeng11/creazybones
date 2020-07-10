@@ -1,4 +1,17 @@
-{% extends 'base.html' %} {% block style %} {% endblock %} {% block content %}
+{% extends 'base.html' %} {% block style %}
+<style>
+  body {
+    text-align: center;
+  }
+  main {
+    border-style: ridge;
+  }
+  form {
+    width: 200px;
+    margin: 25px auto;
+  }
+</style>
+{% endblock %} {% block content %}
 <form action="" method="POST">
   {% csrf_token %}
   <table>
