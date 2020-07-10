@@ -3,6 +3,7 @@ from .models import Crazybone, Profile, Comment, TradeRequest, FriendList, Notif
 # Register your models here.
 
 admin.site.register(Crazybone)
+admin.site.register(Cb_Profile)
 admin.site.register(Profile)
 admin.site.register(Cb_Profile)
 admin.site.register(Comment)

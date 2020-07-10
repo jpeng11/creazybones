@@ -72,11 +72,12 @@
 <h1>Crazybones</h1>
 
 <div class="grid-container">
-  {% for cb in all_cb %} {% if cb in user_cb %}
+  {% for cb in all_cb %} 
+  {% if cb in user_cb %}
   <div class="grid-item">
     <a href="/crazybone/{{cb.id}}"><img src="{{cb.img}}" /></a>
     <p>{{cb.name}}
-        ({% for cbP in cb.cb_profile_set.all %}{% if cbP.profile == user.profile %}{{cbP.qty}}{% endif %}{% endfor %})
+        ({% for cbP in cb.cb_profile_set.all %}{% if cbP.profile == user_profile.profile %}{{cbP.qty}}{% endif %}{% endfor %})
     </p>
   </div>
   {% else %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from ..seed import crazybones, users
-from ..models import Crazybone, Profile, FriendList, Comment, TradeRequest, Cb_Profile
+from ..models import Crazybone, Profile, FriendList, Comment, TradeRequest, Cb_Profile, Battle
 from django.contrib.auth.models import User
 from operator import attrgetter
 from itertools import chain
@@ -23,16 +23,25 @@ def home(request):
         for friend in friends2:
             friends.append(friend.user)
         trades1 = TradeRequest.objects.filter(
-            user_from__in=friends).order_by('date')[:10]
+            user_from__in=friends).order_by('-date')[:10]
         trades2 = TradeRequest.objects.filter(
-            user_to__in=friends).order_by('date')[:10]
+            user_to__in=friends).order_by('-date')[:10]
         comments = Comment.objects.filter(
-            user__in=friends).order_by('date')[:10]
+            user__in=friends).order_by('-date')[:10]
+        battles1 = Battle.objects.filter(challenger__in=friends).order_by('-date')[:10]
+        battles2 = Battle.objects.filter(defender__in=friends).order_by('-date')[:10]
         feed = sorted(
-            chain(comments, trades1, trades2),
+            chain(comments, trades1, trades2, battles1, battles2),
             key=attrgetter('date')
         )
-        return render(request, 'home.html', {'cbs': crazybones, 'feed': feed[:10]})
+        seen = set()
+        new_feed = []
+        for obj in feed:
+            if obj.date not in seen:
+                new_feed.append(obj)
+                seen.add(obj.date)
+
+        return render(request, 'home.html', {'cbs': crazybones, 'feed': reversed(new_feed[:15])})
     print('feed: ', feed)
     return render(request, 'home.html', {'cbs': crazybones})
 

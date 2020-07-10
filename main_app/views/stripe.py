@@ -8,7 +8,7 @@ from django.conf import settings
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
-from ..models import Crazybone, Profile
+from ..models import Crazybone, Profile, Cb_Profile
 
 
 @csrf_exempt
@@ -45,12 +45,16 @@ def create_checkout_session(request):
 
 
 def success(request):
-    current_user = request.user.id
     cbs = []
     for z in range(10):
         rand_cb = Crazybone.objects.order_by('?')[0]
+        if(rand_cb in request.user.profile.cb.all()):
+          cb2P=Cb_Profile.objects.get(cb=rand_cb, profile=request.user.profile)
+          cb2P.qty+=1
+          cb2P.save()
+        else:
+            request.user.profile.cb.add(rand_cb)
         cbs.append(rand_cb)
-        request.user.profile.cb.add(rand_cb)
     return render(request, 'stripe/success.html', {'cbs': cbs})
 
 
