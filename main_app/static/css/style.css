@@ -73,6 +73,9 @@ a:visited {
     border-style: ridge;
     width: 800px;
   }
+  ul {
+    padding-left: 0;
+  }
 }
 /* Smartphone CSS */
 @media only screen and (max-device-width: 767px) {
