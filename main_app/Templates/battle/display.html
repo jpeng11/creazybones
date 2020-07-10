@@ -2,19 +2,30 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
 <script defer src="{% static 'javascript/battle.js' %}"></script>
 {% endblock %} {% block content %}
-<h1>Battle!! display</h1>
-<h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
-{% if user.profile.id == turn.id %}
-<p>it is your turn</p>
-<div class="battle-view">
-  <img class="other" src="{{other.cb.img}}" alt="" />
-  <img id="turn" class="turn" src="{{turn.cb.img}}" alt="" />
-</div>
-<button id="flick-btn">Flick!</button>
-<form id="hidden-form" action="{% url 'battle_move' battle.id %}" method="POST">
-  {% csrf_token %}
-  <input type="text" name="move" hidden id="hidden-input" />
-</form>
-{% else %}
-<p>it is not your turn</p>
-{% endif %} {% endblock %}
+<table class="tb-1" style="background-color: #e7f4d2;">
+  <tbody>
+    <tr>
+      <td class="td-1">
+        <div class="display">
+          <h1>Battle!! display</h1>
+          <h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
+          {% if user.profile.id == turn.id %}
+          <p>it is your turn</p>
+          <div class="battle-view">
+            <img class="other" src="{{other.cb.img}}" alt="" />
+            <img id="turn" class="turn" src="{{turn.cb.img}}" alt="" />
+          </div>
+          <button id="flick-btn">Flick!</button>
+          <form id="hidden-form" action="{% url 'battle_move' battle.id %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="move" hidden id="hidden-input" />
+          </form>
+          {% else %}
+          <p>it is not your turn</p>
+          {% endif %}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

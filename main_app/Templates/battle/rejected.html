@@ -1,7 +1,15 @@
 {% extends 'base.html' %} {% load static %} {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
 {% endblock %} {% block content %}
-<h1>Battle!! rejected</h1>
-<h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
-<p>It is not your turn or you are not a part of this battle</p>
+<table class="tb-1" style="background-color: #e7f4d2;">
+  <tbody>
+    <tr>
+      <td class="td-1">
+        <h1>Battle!! rejected</h1>
+        <h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
+        <p>It is not your turn or you are not a part of this battle</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 {% endblock %}

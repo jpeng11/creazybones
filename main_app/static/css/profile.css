@@ -46,6 +46,7 @@ p {
   transition: all 0.5s ease;
   float: none;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 .btn--promo {
   color: #dff9fb;
@@ -64,4 +65,17 @@ p {
   position: absolute;
   margin-top: -30px;
   margin-left: -55px;
+}
+#editBtn {
+  margin: 0;
+}
+
+.profileImg {
+  width: 70px;
+  height: 70px;
+  margin-top: 20px;
+}
+
+#nameH1 {
+  margin-top: 0;
 }

@@ -2,10 +2,26 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
 <script src="https://js.stripe.com/v3/"></script>
 <script defer src="{% static 'javascript/stripe.js' %}"></script>
-{% endblock %} {% block content %} {% if not user_profile %}
+{% endblock %} {% block content %} 
+
+{% if not user_profile %}
 <h1>User not exists</h1>
+
 {%else%}
-<h1>{{ user_profile.username }}</h1>
+<div class="header">
+{% for photo in user.profile.photo_set.all %}
+      <img class="profileImg" src="{{photo.url}}">
+    {% empty %}
+      <img class="profileImg" src="{%static 'img/profile.png'%}">
+    {% endfor %}
+<h1 id="nameH1"><span>{{ user_profile.username }}</span></h1>
+</div>
+
+{% if user_profile.id == current_user.id %}
+  <button id="editBtn">
+    <a href="{% url 'user_update' user_profile.id %}">EDIT</a>
+  </button>
+  {%endif%}
 <table class="tb-1">
   <tbody>
     <tr>
@@ -48,16 +64,6 @@
       <td class="td-1">Join Date</td>
       <td class="td-1">{{user_profile.date_joined}}</td>
     </tr>
-    {% if user_profile.id == current_user.id %}
-    <tr>
-      <td class="td-1"></td>
-      <td class="td-1">
-        <button>
-          <a href="{% url 'user_update' user_profile.id %}">EDIT</a>
-        </button>
-      </td>
-    </tr>
-    {%endif%}
   </tbody>
 </table>
 
@@ -65,7 +71,7 @@
 
 <div>
   <h1 class="neon">Do you want more crazybone?</h1>
-  <h2>Purchase 10 packs of Crazy Bone loot bags</h2>
+  <h2>Purchase 10 packs of Crazy Bone</h2>
   <button id="submitBtn" class="btn btn--promo">YES!TAKE MY MONEY!!!</button>
 </div>
 <hr />
@@ -89,5 +95,43 @@
   </div>
   {% endif %} {% endfor %} {%endif%}
 </div>
+{% if user_profile.id == current_user.id %}
+<hr />
+<h1>Trades</h1>
 
+{% if trade%}
+<table class="tb-1">
+  <tbody>
+  <tr>
+    <th class="td-1">Trade id</th>
+    <th class="td-1">Trade from</th>
+    <th class="td-1">Trade to</th>
+    <th class="td-1">CB offered</th>
+    <th class="td-1">CB wanted</th>
+    <th class="td-1">Date</th>
+  </tr>
+    {% for t in trade%}
+    <tr>
+      <td class="td-1"><button><a href="{% url 'trade-action' t.id%}">{{t.id}}</a></button></td>
+      <td class="td-1">{{t.user_from}}</td>
+      <td class="td-1">{{t.user_to}}</td>
+      <td class="td-1">{{t.cb_offered}}</td>
+      <td class="td-1">{{t.cb_wanted}}</td>
+      <td class="td-1">{{t.date}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%endif%}
+<h3>You have no trade request at the moments</h3>
+{%endif%}
+
+{% if not user.profile.photo_set.count%}
+<form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    {% csrf_token %}
+    <input type="file" name="photo-file">
+    <br><br>
+    <input type="submit" class="btn" value="Upload Photo">
+</form>
+{%endif%}
 {% endblock %}

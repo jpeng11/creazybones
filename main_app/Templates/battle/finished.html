@@ -2,7 +2,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/battle.css' %}" />
 <script defer src="{% static 'javascript/battle.js' %}"></script>
 {% endblock %} {% block content %}
-<h1>Battle!! display</h1>
-<h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
-<h4>{{ winner }} is the Champion!!</h4>
-{% endblock %}
+<table class="tb-1" style="background-color: #e7f4d2;">
+  <tbody>
+    <tr>
+      <td class="td-1 display">
+        <h1>Battle!! display</h1>
+        <h2>{{ battle.challenger }} VS {{ battle.defender }}</h2>
+        <h4>{{ winner }} is the Champion!!</h4>
+        {% endblock %}
+      </td>
+    </tr>
+  </tbody>
+</table>
