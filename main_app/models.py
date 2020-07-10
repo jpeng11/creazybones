@@ -24,6 +24,7 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse("profile", kwargs={"user_id": self.id})
 
+
 class Cb_Profile(models.Model):
     qty = models.IntegerField(default=1)
 
@@ -32,6 +33,7 @@ class Cb_Profile(models.Model):
 
     def __str__(self):
         return f"{self.profile}: {self.cb} x{self.qty}"
+
 
 class Comment(models.Model):
     text = models.TextField(max_length=300)
@@ -48,7 +50,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user} -> {self.cb}"
-    
+
     def get_type(self):
         return 'comment'
 
@@ -62,13 +64,13 @@ class Comment(models.Model):
             print('more than a day')
             return f'{time.days} day{s} ago'
         elif time.seconds >= 3600:
-            res = int(time.seconds /3600)
+            res = int(time.seconds / 3600)
             s = '' if res == 1 else 's'
             print('more than a hour')
             return f'{res} hour{s} ago'
         else:
             print('else')
-            res = int(time.seconds /60)
+            res = int(time.seconds / 60)
             s = '' if res == 1 else 's'
             return f'{res} minute{s} ago'
 
@@ -112,6 +114,7 @@ TRADE_STATUS = (
     ('P', 'Pending')
 )
 
+
 class TradeRequest(models.Model):
     user_from = models.ForeignKey(
         Profile, related_name='user_from', on_delete=models.CASCADE)
@@ -122,12 +125,14 @@ class TradeRequest(models.Model):
     cb_offered = models.ForeignKey(
         Crazybone, related_name='cb_offered', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, blank=True)
-    created_notification = models.OneToOneField(Notification, blank = True, null = True, on_delete=models.CASCADE)
+    created_notification = models.OneToOneField(
+        Notification, blank=True, null=True, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=1,
         choices=TRADE_STATUS,
         default='P'
     )
+
     def get_type(self):
         return 'trade'
 
@@ -136,17 +141,18 @@ class TradeRequest(models.Model):
         if time.seconds <= 60:
             return 'Less than a minute ago'
         elif time.seconds >= 86400:
-            res = int(time.seconds /86400)
+            res = int(time.seconds / 86400)
             s = '' if res == 1 else 's'
             return f'{res} day{s} ago'
         elif time.seconds >= 3600:
-            res = int(time.seconds /3600)
+            res = int(time.seconds / 3600)
             s = '' if res == 1 else 's'
             return f'{res} hour{s} ago'
         else:
-            res = int(time.seconds /60)
+            res = int(time.seconds / 60)
             s = '' if res == 1 else 's'
             return f'{res} minute{s} ago'
+
 
 class Clan(models.Model):
     name = models.CharField(max_length=100)
@@ -154,6 +160,7 @@ class Clan(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.members}"
+
 
 WINNER = (
     ('N', 'None'),
@@ -194,14 +201,15 @@ class Battle(models.Model):
 
     defender_cb = models.ForeignKey(
         Crazybone, related_name='defender_cb', on_delete=models.CASCADE)
-    
+
     challenger_cb = models.ForeignKey(
         Crazybone, related_name='challenger_cb', on_delete=models.CASCADE)
 
     accepted = models.BooleanField(default=False)
     date = models.DateTimeField(default=datetime.now, blank=True)
-    created_notification = models.OneToOneField(Notification, blank = True, null = True, on_delete=models.CASCADE)
-    
+    created_notification = models.OneToOneField(
+        Notification, blank=True, null=True, on_delete=models.CASCADE)
+
     def __str__(self):
         return f"Battle: {self.id}"
 
@@ -218,12 +226,20 @@ class Battle(models.Model):
             print('more than a day')
             return f'{time.days} day{s} ago'
         elif time.seconds >= 3600:
-            res = int(time.seconds /3600)
+            res = int(time.seconds / 3600)
             s = '' if res == 1 else 's'
             print('more than a hour')
             return f'{res} hour{s} ago'
         else:
             print('else')
-            res = int(time.seconds /60)
+            res = int(time.seconds / 60)
             s = '' if res == 1 else 's'
             return f'{res} minute{s} ago'
+
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for user_id: {self.user_id} @{self.url}"

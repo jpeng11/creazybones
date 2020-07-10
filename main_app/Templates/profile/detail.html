@@ -3,16 +3,27 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script defer src="{% static 'javascript/stripe.js' %}"></script>
 {% endblock %} {% block content %} {% if not user_profile %}
+
 <h1>User not exists</h1>
+
+
 {%else%}
-<h1>
-  {{ user_profile.username }}{% if user_profile.id == current_user.id %}
+
+<div class="header">
+
+
+<h1>{% for photo in user.profile.photo_set.all %}
+      <img class="profileImg" src="{{photo.url}}">
+    {% empty %}
+      <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+    {% endfor %}<span>{{ user_profile.username }}</span></h1>
+</div>
+
+{% if user_profile.id == current_user.id %}
   <button id="editBtn">
     <a href="{% url 'user_update' user_profile.id %}">EDIT</a>
   </button>
   {%endif%}
-</h1>
-
 <table class="tb-1">
   <tbody>
     <tr>
@@ -113,5 +124,16 @@
     {% endfor %}
   </tbody>
 </table>
-{%endif%}{%endif%}
+{%endif%}
+<h3>You have no trade request on the moments</h3>
+{%endif%}
+
+{% if not user.profile.photo_set.count%}
+<form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    {% csrf_token %}
+    <input type="file" name="photo-file">
+    <br><br>
+    <input type="submit" class="btn" value="Upload Photo">
+</form>
+{%endif%}
 {% endblock %}
