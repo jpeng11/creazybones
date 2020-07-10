@@ -16,7 +16,11 @@
       {% for result in results %}
       <tr>
         <td>{{result.user}}</td>
-        <td>{{result.cb}}</td>
+        <td>{{result.cb}}
+          {% if result.num %}
+          ({{result.num}})
+          {% endif %}
+        </td>
         <td>
           {% if result.battle == False %}
           <input
@@ -29,7 +33,7 @@
             required
           />
           {% else %}
-          <p> This CrazyBone is Battling </p>
+          <p> This Crazy Bone is currently in a battle - Trading not available </p>
           {% endif %}
         </td>
       </tr>
@@ -39,8 +43,8 @@
       <label for="offered">Select which Crazy Bone you would like to offer</label>
       <select id="offered" name="offered">
         {% for crazybone in user_crazybones%}
-        <option value="{{crazybone}}" {% if "in battle" in crazybone %}disabled{% endif %}>
-          {{crazybone}}
+        <option value="{{crazybone.value}}" {% if "is in a battle" in crazybone.name %}disabled{% endif %}>
+          {{crazybone.name}}
         </option>
         {% endfor %}
       </select>
