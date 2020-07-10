@@ -2,6 +2,9 @@ a:link,
 a:visited {
   color: blue;
 }
+ul {
+  padding-left: 0;
+}
 @media only screen and (min-device-width: 768px) {
   html {
     font-family: "Times New Roman";
