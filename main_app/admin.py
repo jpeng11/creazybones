@@ -5,7 +5,6 @@ from .models import Crazybone, Profile, Comment, TradeRequest, FriendList, Notif
 admin.site.register(Crazybone)
 admin.site.register(Cb_Profile)
 admin.site.register(Profile)
-admin.site.register(Cb_Profile)
 admin.site.register(Comment)
 admin.site.register(TradeRequest)
 admin.site.register(FriendList)
