@@ -2,7 +2,7 @@
   <br>
   <img alt="Crazy Bones" src="https://vignette.wikia.nocookie.net/crazybonespedia/images/1/1c/LogoIdea2.png/revision/latest/scale-to-width-down/310?cb=20190222195524" width="500px">
   <h1><a href="https://crazybone.herokuapp.com/">Crazy Bones</a></h1>
-  <strong>xxxxx</strong>
+  <strong>Let's travel back to 90's</strong>
 </div>
 
 ## What is Crazy Bones

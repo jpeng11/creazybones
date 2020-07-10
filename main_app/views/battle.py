@@ -89,18 +89,28 @@ def create(req):
     challenger_cb = Crazybone.objects.get(name=req.POST['challenger_cb'])
     battle_noti = Notification.objects.create(notification_type='B', noti_from=req.user.profile, noti_to=defender)
     battle = Battle.objects.create(challenger=req.user.profile, defender=defender, challenger_cb=challenger_cb, defender_cb=defender_cb, turn='D', created_notification = battle_noti)
-    return redirect('battle_display', battle_id=battle.id)
+    return redirect('battle_display', battle_id = battle.id)
+
+@login_required
+def notification(req, notif_id):
+    this_noti = Notification.objects.get(id = notif_id)
+    if(this_noti.noti_to == req.user.profile):    
+        this_battle = Battle.objects.get(created_notification = this_noti)
+        return redirect('battle_display', battle_id = this_battle.id)
+    else:
+        return redirect('')
 
 @login_required
 def display(req, battle_id):
     #if winner != N & Notification belongs to req.user.profile, delete the notification
     battle = Battle.objects.get(id=battle_id)
     this_noti = battle.created_notification
+    print(req.user.profile.id, battle.challenger.id, battle.defender.id)
     if req.user.profile.id == battle.challenger.id or req.user.profile.id == battle.defender.id:
         if not battle.accepted:
-            return render(req, 'battle/pending.html', {'batlle': battle})
+            return render(req, 'battle/pending.html', {'battle': battle})
         if battle.winner != 'N':
-            if (this_noti.noti_from == req.user.profile):
+            if this_noti.noti_to == req.user.profile:
                 this_noti.delete()
             winner = battle.challenger if battle.winner == 'C' else battle.defender
             return render(req, 'battle/finished.html', {'battle': battle, 'winner': winner})
@@ -128,22 +138,37 @@ def display(req, battle_id):
             }
         return render(req, 'battle/display.html', {'battle': battle, 'turn': turn, 'other': other})
     else:
-        return redirect('battle_error', battle_id=battle_id)
+        return redirect('battle_error', battle_id=battle.id)
     
     
 
 @login_required
-def accept(req, battle_id):
-    battle = Battle.objects.get(id=battle_id)
-    #change from B to M
-    this_noti = battle.created_notification
+def accept(req, pk, noti_type):
+    sent_from = Profile.objects.get(user__id = pk)
+    this_noti = Notification.objects.filter(noti_to = req.user.profile)
+    this_noti = this_noti.filter(noti_from = sent_from)
+    this_noti = this_noti.get(notification_type = noti_type)
+    battle = Battle.objects.get(created_notification=this_noti)
     this_noti.notification_type = 'M'
-    if battle.accepted == False or req.user.profile.id == battle.defender.id:
+    this_noti.save()
+    #change from B to M
+    if battle.accepted == False or req.user.profile.id == battle.defender.id or req.user.profile.id == battle.challenger.id:
         battle.accepted = True
         battle.save()
-        return redirect('battle_display', battle_id=battle_id)
+        return redirect('battle_display', battle_id=battle.id)
     else:
-        return redirect('battle_error', battle_id=battle_id)
+        return redirect('battle_error', battle_id=battle.id)
+
+@login_required
+def reject(req, pk, noti_type):
+    sent_from = Profile.objects.get(user__id = pk)
+    this_noti = Notification.objects.filter(noti_to = req.user.profile)
+    this_noti = this_noti.filter(noti_from = sent_from)
+    this_noti = this_noti.get(notification_type = noti_type)
+    battle = Battle.objects.get(created_notification=this_noti)
+    battle.delete()
+    this_noti.delete()
+    return redirect('notifications')
 
 @login_required
 def error(req, battle_id):
@@ -163,21 +188,25 @@ def move(req, battle_id):
 
         if last_turn == 'C':
             battle.challenger.cb.add(battle.defender_cb)
-            cb_removing = Cb_Profile.objects.get(profile=battle.defender, cb=battle.defender_cb)
-            if cb_removing.qty > 1:
-                cb_removing.qty -= 1
-                cb_removing.save()
-            else:
-                cb_removing.delete()
+            battle.defender.cb.remove(battle.defender_cb)
+            this_noti.noti_from = battle.challenger
+            this_noti.noti_to = battle.defender
+            this_noti.save()
         else:
             battle.defender.cb.add(battle.challenger_cb)
             battle.challenger.cb.remove(battle.challenger_cb)
+            this_noti.noti_from = battle.defender
+            this_noti.noti_to = battle.challenger
+            this_noti.save()
+
         return redirect('battle_display', battle_id=battle_id)
     elif move == 'miss':
         #create notification
-        this_noti.noti_to = battle.challenger
-        this_noti.noti_from = req.user.profile
         battle.turn = 'C' if battle.turn == 'D' else 'D'
         battle.save()
+        temp = this_noti.noti_from
+        this_noti.noti_from = this_noti.noti_to
+        this_noti.noti_to = temp
+        this_noti.save()
         return redirect('battle_display', battle_id=battle_id)
     return redirect('battle_error', battle_id=battle_id)
