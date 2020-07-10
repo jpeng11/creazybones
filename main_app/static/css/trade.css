@@ -40,6 +40,9 @@ td {
 table td {
   text-align: center;
 }
+#finder input[type='submit'] {
+  display: inline;
+}
 
 input[type="submit"] {
   display: block;
